@@ -22,7 +22,11 @@ module.exports.init = function() {
         },
         salt: String,
         hashPass: String,
-        age: Number
+        age: {
+            type: Number,
+            min: 16,
+            max: 155
+        }
     });
 
     userSchema.method({

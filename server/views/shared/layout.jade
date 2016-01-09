@@ -3,19 +3,20 @@ html
     head
         block head-content
         title EasyTrade
-        link(rel="stylesheet" href="/lib/bootstrap-3.2.0/css/bootstrap.min.css")
+        link(rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap-theme.min.css")
         link(rel="stylesheet" href="/css/site.css")
-    body(data-ng-app ng-contoller="main-controller")
+    body(data-ng-app ng-controller="main-controller")
         nav.navbar.navbar-default
             .container-fluid
                 .navbar-header
-                    button.navbar-toggle.collapsed(data-toggle="collapse" data-target="menu1")
+                    button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#menu")
                         span.sr-only | Toggle navigation
                         span.icon-bar
                         span.icon-bar
                         span.icon-bar
                     a.navbar-brand(href="/") EasyTrade
-                .navbar-collapse.collapse#menu1
+                #menu.navbar-collapse.collapse
                     ul.nav.navbar-nav
                         li.active
                             a(href="/") Home

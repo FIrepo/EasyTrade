@@ -12,11 +12,13 @@ module.exports = {
     postRegister: function(req, res, next) {
         let newUserData = req.body;
 
-        if (newUserData.password != newUserData.confirmPassword) {
+        if (newUserData.password !== newUserData.confirmPassword) {
             req.session.error = 'Passwords do not match!';
             res.redirect('/register');
-        }
-        else {
+        } else if(newUserData.password.length < 6){
+            req.session.error = 'Password should be at least 6 characters long!';
+            res.redirect('/register');
+        } else {
             newUserData.salt = encryption.generateSalt();
             newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
             users.create(newUserData, function(err, user) {
