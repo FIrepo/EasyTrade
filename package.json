@@ -5,6 +5,10 @@
   "main": "server.js",
   "author": "Team 10",
   "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.js",
+    "postinstall": "bower install"
+    },
   "dependencies": {
     "body-parser": "^1.14.2",
     "connect-busboy": "0.0.2",
