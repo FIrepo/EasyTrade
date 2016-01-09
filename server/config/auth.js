@@ -8,8 +8,8 @@ module.exports = {
             if (err) return next(err);
             if (!user) {
                 req.session.error = 'Invalid user name or password!';
-                res.status(400);
-                //res.render('shared/error', {error:'Invalid user name or password!'});
+                res.redirect('/login');
+                // res.render('shared/error', {error:'Invalid user name or password!'});
             }
 
             req.logIn(user, function (err) {

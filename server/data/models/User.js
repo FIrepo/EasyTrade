@@ -1,7 +1,9 @@
 'use strict';
 
 let mongoose = require('mongoose'),
-    encryption = require('../../utilities/encryption');
+    encryption = require('../../utilities/encryption'),
+    userRoles = ['user', 'admin'],
+    forbiddenCharacters = [' ', '<', '>', '(', ')', ','];
 
 module.exports.init = function() {
     let userSchema = mongoose.Schema({
@@ -15,9 +17,15 @@ module.exports.init = function() {
             validate: {
                 validator: function (val) {
                     'use strict';
-                    return !val.includes(' ');
+                    let containsForbiddenChars = forbiddenCharacters.some(
+                        function(item){
+                            return val.includes(item);
+                        }
+                    );
+
+                    return !containsForbiddenChars;
                 },
-                message: 'Username should not contain empty spaces!'
+                message: 'Username should not contains invalid characters!'
             }
         },
         salt: String,
@@ -26,6 +34,19 @@ module.exports.init = function() {
             type: Number,
             min: 16,
             max: 155
+        },
+        role: {
+            type: String,
+            default: 'user',
+            validate: {
+                validator: function (val) {
+                    'use strict';
+                    return userRoles.some(function(item){
+                        return (item === val);
+                    });
+                },
+                message: 'Invalid user role!'
+            }
         }
     });
 

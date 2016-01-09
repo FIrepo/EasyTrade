@@ -1,19 +1,17 @@
 'use strict';
 
-let UsersController = require('./users-controller');
+let fs = require('fs'),
+    path = './server/controllers',
+    controllers = {};
 
-module.exports = {
-    users: UsersController
-};
+(function() {
+    console.log('Loading controllers...');
+    fs.readdirSync(path)
+        .filter(file => file.indexOf('controller') !== -1)
+        .forEach(file => {
+            let controllerName = file.substring(0, file.lastIndexOf('.'));
+            controllers[`${controllerName}`] = require('./' + file);
+        });
+}());
 
-
-//var fs = require('fs'),
-//    path = './server/controllers';
-//
-//module.exports = function() {
-//    console.log('Loading controllers...');
-//    fs.readdirSync(path)
-//        .filter(file => file.indexOf('controller'))
-//        .forEach(file => require('./' + file)());
-//    console.log(files);
-//};
+module.exports = controllers;
