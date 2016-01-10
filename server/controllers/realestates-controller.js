@@ -13,15 +13,28 @@ module.exports = function () {
             res.render(CONTROLLER_NAME + '/create', {estates: realEstateTypes, deals: dealTypes});
         },
         create: function (req, res, next) {
-            data.create(req.body, function (err, data) {
+            let newRealEstate = req.body;
+            data.create(newRealEstate, function (err, data) {
                 if (err) {
-                    console.log(err);
                     res.redirect('/');
                     return
                 }
 
-                res.redirect('/');
+                res.redirect('/real-estates/all');
             });
+        },
+        getAll: function (req, res, next) {
+            data.all(null, function (err, estates) {
+                if (err) {
+                    req.session.error = 'Estates cannot be obtained!';
+                    res.redirect('/');
+                    return;
+                }
+
+                console.log(estates)
+                res.render(CONTROLLER_NAME+'/all-real-estates',{estates: estates});
+                return;
+            })
         }
     };
 };

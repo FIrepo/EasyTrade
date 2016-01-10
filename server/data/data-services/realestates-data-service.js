@@ -5,7 +5,7 @@ let RealEstate = mongoose.model('RealEstate');
 
 module.exports = {
     create: function(realEstate, callback) {
-        RealEstate.create(RealEstate, callback);
+        RealEstate.create(realEstate, callback);
     },
     all: function(query, callback){
         query = query || {};
