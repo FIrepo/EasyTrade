@@ -63,10 +63,20 @@ module.exports = function(app, usersData){
             if(app.locals.currentUser
                 && (app.locals.currentUser.username === req.body.username
                 || app.locals.currentUser.role === 'admin')){
-                usersData.update(req.body.username, req.body, function(updatedUser){
+                let newUserData = req.body;
+                if(newUserData.password){
+                    if(newUserData.password && newUserData.password.length < 6){
+                        req.session.error = 'Password should be at least 6 characters long!';
+                        res.redirect('/register');
+                    } else {
+                        newUserData.salt = encryption.generateSalt();
+                        newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
+                    }
+                }
+
+                usersData.update(newUserData.username, req.body, function(updatedUser){
                     app.locals.currentUser = updatedUser;
-                    res.render('users/profile');
-                    //res.redirect('/profile');//TODO jade
+                    res.redirect('/profile');
                 })
             } else {
                 req.session.error = 'Not for you';

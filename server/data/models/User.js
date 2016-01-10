@@ -62,6 +62,7 @@ module.exports.init = function() {
                 message: 'Username should not contain invalid characters!'
             }
         },
+        email: String, //TODO: Validate Email
         salt: String,
         hashPass: String,
         age: {
