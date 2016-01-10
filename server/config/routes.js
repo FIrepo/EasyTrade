@@ -12,6 +12,9 @@ module.exports = function(app) {
     app.get('/logout', auth.isAuthenticated, auth.logout);
     app.get('/all-users', controllers['users-controller'](app, services['users-data-service']).getAllUsers);
 
+    app.get('/real-estates/create', controllers['realestates-controller']().getCreateForm);
+    app.post('/real-estates/create', controllers['realestates-controller']().create);
+
     app.get('/', function(req, res) {
         res.render('index');
     });
