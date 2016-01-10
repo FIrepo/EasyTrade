@@ -1,0 +1,20 @@
+extends ../shared/layout
+block main-content
+    h1.text-center= estate.type
+    .panel.panel-warning
+        .panel-heading
+            h3.panel-title Address
+        .panel-body
+            div=estate.city
+            div=estate.address
+    .panel.panel-warning
+        .panel-heading
+            h3.panel-title Price
+        .panel-body
+            div=estate.price
+    .panel.panel-warning
+        .panel-heading
+            h3.panel-title More information
+        .panel-body
+            div=estate.quadrature
+            div=estate.moreInformation

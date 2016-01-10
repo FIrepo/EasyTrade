@@ -14,13 +14,13 @@ module.exports = function () {
         },
         create: function (req, res, next) {
             let newRealEstate = req.body;
+            console.log(newRealEstate.images)
             data.create(newRealEstate, function (err, data) {
                 if (err) {
                     res.redirect('/');
                     return
                 }
-
-                res.redirect('/real-estates/all');
+                res.redirect('/real-estates');
             });
         },
         getAll: function (req, res, next) {
@@ -32,9 +32,22 @@ module.exports = function () {
                 }
 
                 console.log(estates)
-                res.render(CONTROLLER_NAME+'/all-real-estates',{estates: estates});
+                res.render(CONTROLLER_NAME + '/all-real-estates', {estates: estates});
                 return;
             })
+        },
+
+        getRealEstate: function (req, res, next) {
+            console.log(req.params.id)
+                data.findById(req.params.id, function (err, estate) {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.render(CONTROLLER_NAME + '/details', {estate: estate});
+                }
+            });
+
+
         }
     };
 };

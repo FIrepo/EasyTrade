@@ -9,8 +9,16 @@ module.exports.init = function () {
             type: String,
             required: true
         },
+        quadrature: {
+            type: Number,
+            required: true
+        },
         price: {
             type: Number,
+            required: true
+        },
+        city: {
+            type: String,
             required: true
         },
         address: {
@@ -21,7 +29,8 @@ module.exports.init = function () {
             type: String,
             required: true
         },
-        description: String
+        images: [],
+        moreInformation: String
     });
 
     var RealEstate = mongoose.model('RealEstate', realEstateSchema);

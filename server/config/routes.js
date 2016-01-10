@@ -14,7 +14,8 @@ module.exports = function(app) {
 
     app.get('/real-estates/create', controllers['realestates-controller']().getCreateForm);
     app.post('/real-estates/create', controllers['realestates-controller']().create);
-    app.get('/real-estates/all', controllers['realestates-controller']().getAll);
+    app.get('/real-estates', controllers['realestates-controller']().getAll);
+    app.get('/real-estates/:id', controllers['realestates-controller']().getRealEstate);
 
     app.get('/', function(req, res) {
         res.render('index');

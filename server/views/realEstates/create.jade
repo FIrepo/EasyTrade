@@ -10,9 +10,18 @@ block main-content
                         each estate in estates
                             option= estate
             .form-group
+                label.col-lg-2.control-label(for="quadrature") Quadrature
+                .col-lg-10
+                    input#quadrature.form-control(type='number',name="quadrature",min="1", step="0.1",  placeholder='Quadrature', required="required")
+
+            .form-group
                 label.col-lg-2.control-label(for="price") Price
                 .col-lg-10
                     input#price.form-control(type='number',name="price",min="1", step="0.1",  placeholder='Price', required="required")
+            .form-group
+                label.col-lg-2.control-label(for="city") City
+                .col-lg-10
+                    input#city.form-control(type='text',name="city" placeholder='City', required="required")
             .form-group
                 label.col-lg-2.control-label(for="address") Address
                 .col-lg-10
@@ -24,9 +33,14 @@ block main-content
                         each type in deals
                             option= type
             .form-group
-                label.col-lg-2.control-label(for="description") Description
+                label.col-lg-2.control-label(for="description") More Information
                 .col-lg-10
-                    textarea#description.form-control(name="description",placeholder='Description')
+                    textarea#description.form-control(name="moreInformation",placeholder='More Information...')
+            .form-group
+                label.col-lg-2.control-label(for="images") Images
+                .col-lg-10
+                    input#images(type="file" multiple="multiple" name="images")
+
             .form-group
                 .col-lg-10.col-lg-offset-2
                     button.btn.btn-default.pull-right Cancel
