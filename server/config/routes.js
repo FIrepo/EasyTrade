@@ -11,6 +11,10 @@ module.exports = function(app) {
     app.post('/login', auth.login);
     app.get('/logout', auth.isAuthenticated, auth.logout);
     app.get('/all-users', controllers['users-controller'](app, services['users-data-service']).getAllUsers);
+    app.get('/profile', function(req, res){
+        res.render('users/profile');
+    });
+    app.post('/profile', controllers['users-controller'](app, services['users-data-service']).updateUser);
 
     app.get('/', function(req, res) {
         res.render('index');

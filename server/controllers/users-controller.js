@@ -43,18 +43,33 @@ module.exports = function(app, usersData){
             res.render(CONTROLLER_NAME + '/login');
         },
         getAllUsers: function (req, res){
+            let params = req.params || {};
             if(app.locals.currentUser && app.locals.currentUser.role === 'admin'){
-                usersData.all(null, function(err, dbusers){
+                usersData.all(params, function(err, dbUsers){
                     if(err){
                         req.session.error = 'Users cannot be obtained!';
                         res.redirect('/');
                         return;
                     }
-                    res.send(dbusers); //TODO jade
+                    res.send(dbUsers); //TODO jade
                     return;
                 })
             } else {
                 req.session.error = 'For admins only';
+                res.redirect('/');
+            }
+        },
+        updateUser: function(req, res){
+            if(app.locals.currentUser
+                && (app.locals.currentUser.username === req.body.username
+                || app.locals.currentUser.role === 'admin')){
+                usersData.update(req.body.username, req.body, function(updatedUser){
+                    app.locals.currentUser = updatedUser;
+                    res.render('users/profile');
+                    //res.redirect('/profile');//TODO jade
+                })
+            } else {
+                req.session.error = 'Not for you';
                 res.redirect('/');
             }
         }
