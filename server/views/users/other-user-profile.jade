@@ -1,0 +1,27 @@
+extends ../shared/layout
+block main-content
+    if(profileUser)
+        h1 The profile of #{profileUser.username}:
+        form#update-form(method="post", action="/profile")
+            label(for='fname') First name
+            input#fname.form-control(type='text' name='firstName' placeholder='First name' value=profileUser.firstName)
+            br
+            label(for='lname') Last name
+            input#lname.form-control(type='text' name='lastName' placeholder='Last name' value=profileUser.lastName)
+            br
+            label(for='email') Email address
+            input#email.form-control(type='email' name='email' placeholder='email' value=profileUser.email)
+            br
+            label(for='password') Change Password
+            input#password.form-control(type='password' name='password' placeholder='New password')
+            br
+            label(for='age') Age
+            input(id='age' class='form-control' type='number' min=16 max=155 name="age" placeholder="Age" value=profileUser.age)
+            br
+            input(type="submit" class="btn btn-lg btn-primary" value="UPDATE")
+            // br
+            input(id="username" class="hidden" type="text" name="username" value=profileUser.username)
+            a#delete-btn.btn.btn-lg.btn-danger(href='/profile/delete/' + profileUser.username) DELETE USER
+            br
+    else
+        h3 No user
