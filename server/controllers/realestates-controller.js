@@ -14,7 +14,7 @@ module.exports = function () {
         },
         create: function (req, res, next) {
             let newRealEstate = req.body;
-            console.log(newRealEstate.images)
+            console.log(newRealEstate.images);
             data.create(newRealEstate, function (err, data) {
                 if (err) {
                     res.redirect('/');
@@ -31,22 +31,28 @@ module.exports = function () {
                     return;
                 }
 
-                console.log(estates)
                 res.render(CONTROLLER_NAME + '/all-real-estates', {estates: estates});
                 return;
             })
         },
 
         getRealEstate: function (req, res, next) {
-            console.log(req.params.id)
-                data.findById(req.params.id, function (err, estate) {
+            data.findById(req.params.id, function (err, estate) {
                 if (err) {
                     res.send(err);
                 } else {
                     res.render(CONTROLLER_NAME + '/details', {estate: estate});
                 }
             });
-
+        },
+        getEditView: function (req, res, next) {
+            data.findById(req.params.id, function (err, estate) {
+                if (err) {
+                    res.send(err);
+                } else {
+                    res.render(CONTROLLER_NAME + '/edit', {estate: estate, estates: realEstateTypes, deals: dealTypes});
+                }
+            });
 
         }
     };
