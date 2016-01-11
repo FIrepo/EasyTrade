@@ -17,10 +17,11 @@ module.exports = function(app) {
     app.post('/profile', controllers['users-controller'](app, services['users-data-service']).updateUser);
 
     app.get('/cars', controllers['cars-controller'](app, services['cars-data-service']).getMainView);
-    app.get('/cars/details/:id', controllers['cars-controller'](app, services['cars-data-service']).getCar);
     app.get('/cars/create', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).getCreate);
     app.post('/cars/create', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).postCreate);
     app.get('/cars/all', controllers['cars-controller'](app, services['cars-data-service']).getAllCars);
+    app.get('/cars/search', controllers['cars-controller'](app, services['cars-data-service']).getSearch);
+    app.get('/cars/details/:id', controllers['cars-controller'](app, services['cars-data-service']).getCar);
 
 
 

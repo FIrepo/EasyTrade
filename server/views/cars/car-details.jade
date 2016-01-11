@@ -1,7 +1,7 @@
 extends ../shared/layout
 block main-content
     .container.col-md-10
-            .panel.panel-primary
+            .panel.panel-default
                 .panel-heading
                     h3.panel-title
                 .panel-body
@@ -19,3 +19,10 @@ block main-content
                             strong Transmission: #{car.transmission}
                         p
                             strong Fuel: #{car.fuel}
+                        p
+                            strong Contact e-mail: #{car.email}
+                        if(car.phone)
+                            p
+                                strong Contact phone: #{car.phone}
+                        p
+                            strong Description: #{car.description}
