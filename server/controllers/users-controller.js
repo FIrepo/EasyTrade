@@ -50,13 +50,13 @@ module.exports = function (app, usersData) {
                 usersData.all(params, function(responseModelUsers) {
                     if(view === 'single'){
                         if(api){
-                            res.send(JSON.stringify(responseModelUsers[0]));
+                            res.send(responseModelUsers[0]);
                         } else {
                             res.render('users/other-user-profile', {profileUser: responseModelUsers[0]});
                         }
                     } else {
                         if(api){
-                            res.send(JSON.stringify(responseModelUsers));
+                            res.send(responseModelUsers);
                         } else {
                             res.render('users/all-users', {users: responseModelUsers});
                         }
