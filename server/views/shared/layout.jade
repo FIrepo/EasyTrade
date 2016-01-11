@@ -3,9 +3,9 @@ html
     head
         block head-content
         title EasyTrade
-        link(rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css")
-        link(rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap-theme.min.css")
-        link(rel="stylesheet" href="/css/site.css")
+        link(rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet" type="text/css" href="/libs/bootstrap/dist/css/bootstrap-theme.min.css")
+        link(rel="stylesheet" type="text/css" href="/css/site.css")
     body(data-ng-app ng-controller="main-controller")
         nav.navbar.navbar-default
             .container-fluid
@@ -30,6 +30,9 @@ html
                                     a(href="/cars") Cars
                     ul.nav.navbar-nav.navbar-right
                         if (currentUser)
+                            if (currentUser.role === 'admin')
+                                li
+                                    a(href="/admin-panel") Admin panel
                             li
                                 a(href="/profile") #{currentUser.username}
                             li

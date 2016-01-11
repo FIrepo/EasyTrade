@@ -8,7 +8,7 @@ module.exports = {
     },
     all: function(query, callback){
         query = query || {};
-        User.find(query, 'username _id', function(err, users){
+        User.find(query, 'username firstName lastName email age', function(err, users){
             if(err){
                 callback(err);
             } else {
@@ -20,5 +20,15 @@ module.exports = {
         this.all({username: username}, function(users){
             callback(users[0].update(newProps));
         })
+    },
+    delete: function(username, callback){
+        User.remove({username: username}, function(err){
+            if(err){
+                throw err;
+            }
+
+            callback();
+        });
+
     }
 };
