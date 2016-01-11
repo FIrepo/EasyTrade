@@ -53,7 +53,11 @@ module.exports = function () {
                     res.render(CONTROLLER_NAME + '/edit', {estate: estate, estates: realEstateTypes, deals: dealTypes});
                 }
             });
-
+        },
+        edit: function(req,res,next){
+            let realEstate = req.body;
+            console.log(realEstate);
+            console.log('In edit...')
         }
     };
 };

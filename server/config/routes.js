@@ -17,6 +17,7 @@ module.exports = function(app) {
     app.get('/real-estates', controllers['realestates-controller']().getAll);
     app.get('/real-estates/:id', controllers['realestates-controller']().getRealEstate);
     app.get('/real-estates/:id/edit', controllers['realestates-controller']().getEditView);
+    app.put('/real-estates/:id/edit', controllers['realestates-controller']().edit);
 
     app.get('/', function(req, res) {
         res.render('index');
