@@ -1,6 +1,6 @@
 extends ../shared/layout
 block main-content
-    form(method="post")
+    form(method="post" action='/login')
         label(for="username") Username
         input(id="username" class="form-control" type="text" name="username" placeholder="Username")
         br

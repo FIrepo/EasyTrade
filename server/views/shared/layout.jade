@@ -6,8 +6,10 @@ html
         base(href="/")
         link(rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css")
         link(rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap-theme.min.css")
+        link(rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.common.min.css")
+        link(rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.default.min.css")
         link(rel="stylesheet" href="/css/site.css")
-    body(data-ng-app ng-controller="main-controller")
+    body(data-ng-app='myApp')
         nav.navbar.navbar-default
             .container-fluid
                 .navbar-header
@@ -31,6 +33,9 @@ html
                                     a(href="/cars") Cars
                     ul.nav.navbar-nav.navbar-right
                         if (currentUser)
+                            if (currentUser.role === 'admin')
+                                li
+                                    a(href="/admin-panel") Admin panel
                             li
                                 a(href="/profile") #{currentUser.username}
                             li
