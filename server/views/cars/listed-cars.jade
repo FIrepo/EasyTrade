@@ -1,0 +1,20 @@
+extends ../shared/layout
+block main-content
+    each car in cars
+        .container.col-md-6
+            .panel.panel-primary
+                .panel-heading
+                    h3.panel-title #{car.make +' ' + car.model}
+                .panel-body
+                    .container.col-md-6
+                        a(href="/cars/details/" + car._id.toString())
+                            img.img-responsive(src=car.imagesUrl alt="car image")
+                    .container.col-md-6
+                        p
+                            strong Price: #{car.price}
+                        p
+                            strong Year: #{car.yearOfProduction}
+                        p
+                            strong Mileage: #{car.mileage}
+                        p
+                            strong Fuel: #{car.fuel}

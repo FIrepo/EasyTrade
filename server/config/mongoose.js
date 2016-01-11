@@ -1,7 +1,8 @@
 'use strict';
 
 let mongoose = require('mongoose'),
-    UserModel = require('../data/models/User');
+    UserModel = require('../data/models/User'),
+    CarModel = require('../data/models/Car');
 
 module.exports = function(config) {
     mongoose.connect(config.db);
@@ -21,4 +22,5 @@ module.exports = function(config) {
     });
 
     UserModel.init();
+    CarModel.init();
  };

@@ -1,0 +1,21 @@
+extends ../shared/layout
+block main-content
+    .container.col-md-10
+            .panel.panel-primary
+                .panel-heading
+                    h3.panel-title
+                .panel-body
+                    .container.col-md-6
+                        img.img-responsive(src=car.imagesUrl alt="car image")
+                    .container.col-md-6
+                        h2 #{car.make} #{car.model}
+                        p
+                            strong Price: #{car.price}
+                        p
+                            strong Year of production: #{car.yearOfProduction}
+                        p
+                            strong Mileage: #{car.mileage}
+                        p
+                            strong Transmission: #{car.transmission}
+                        p
+                            strong Fuel: #{car.fuel}
