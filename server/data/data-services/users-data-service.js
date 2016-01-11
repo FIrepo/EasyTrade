@@ -8,7 +8,7 @@ module.exports = {
     },
     all: function(query, callback){
         query = query || {};
-        User.find(query, 'username firstName lastName email age', function(err, users){
+        User.find(query, 'username firstName lastName email age role', function(err, users){
             if(err){
                 callback(err);
             } else {

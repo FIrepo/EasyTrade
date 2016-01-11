@@ -1,6 +1,4 @@
 extends ../shared/layout
 block main-content
-    ul All users
-        each user in users
-            li
-                a(href='/profile/#{user.username}')= user.username
+    div(ng-controller='AllUsersCtrl')
+        div(kendo-grid k-options='gridOptions')

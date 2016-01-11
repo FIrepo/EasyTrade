@@ -5,6 +5,7 @@ let auth = require('./auth'),
     services = require('../data/data-services');
 
 module.exports = function(app) {
+    app.get('/api/all-users', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
     app.get('/register', controllers['users-controller'](app, services['users-data-service']).getRegister);
     app.post('/register', controllers['users-controller'](app, services['users-data-service']).postRegister);
     app.get('/login', controllers['users-controller'](app, services['users-data-service']).getLogin);

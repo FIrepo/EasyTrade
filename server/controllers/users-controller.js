@@ -44,13 +44,22 @@ module.exports = function (app, usersData) {
         },
         getAllUsers: function (req, res) {
             let view = req.params.username ? 'single' : 'all',
-                params = req.params;
+                params = req.params,
+                api = req.url.indexOf('api') !== -1;
             if (app.locals.currentUser && app.locals.currentUser.role === 'admin') {
                 usersData.all(params, function(responseModelUsers) {
                     if(view === 'single'){
-                        res.render('users/other-user-profile', {profileUser: responseModelUsers[0]});
+                        if(api){
+                            res.send(JSON.stringify(responseModelUsers[0]));
+                        } else {
+                            res.render('users/other-user-profile', {profileUser: responseModelUsers[0]});
+                        }
                     } else {
-                        res.render('users/all-users', {users: responseModelUsers});
+                        if(api){
+                            res.send(JSON.stringify(responseModelUsers));
+                        } else {
+                            res.render('users/all-users', {users: responseModelUsers});
+                        }
                     }
                 })
             } else {
