@@ -1,6 +1,6 @@
 extends ../shared/layout
 block main-content
-    form.form-horizontal(name="estateForm", method="post")
+    form.form-horizontal(method="post", action="/real-estates/create")
         fieldset
             legend Create Real Estate
             .form-group
@@ -43,5 +43,5 @@ block main-content
 
             .form-group
                 .col-lg-10.col-lg-offset-2
-                    button.btn.btn-default.pull-right Cancel
+                    a.btn.btn-default.pull-right(href="/") Cancel
                     button.btn.btn-primary.pull-right Create

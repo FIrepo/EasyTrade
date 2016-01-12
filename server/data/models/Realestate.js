@@ -29,7 +29,6 @@ module.exports.init = function () {
             type: String,
             required: true
         },
-        images: [],
         moreInformation: String
     });
 

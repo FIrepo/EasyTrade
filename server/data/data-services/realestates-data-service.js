@@ -5,6 +5,7 @@ let RealEstate = mongoose.model('RealEstate');
 
 module.exports = {
     create: function(realEstate, callback) {
+        console.log(realEstate);
         RealEstate.create(realEstate, callback);
     },
     findById: function(id,callback){
