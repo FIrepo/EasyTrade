@@ -16,14 +16,40 @@ module.exports = {
             }
         })
     },
-    all: function(query, callback){
-        query = query || {};
-        RealEstate.find(query, 'type price address', function(err, realEstates){
-            if(err){
+    update: function (estate, callback) {
+        RealEstate.update({_id: estate.id}, estate, function (err, estate) {
+            if (err) {
                 callback(err);
             } else {
-                callback(null, realEstates);
+                callback(null, estate);
+            }
+        })
+    },
+    count: function (query, callback) {
+        query = query || {};
+        RealEstate.count(query, function (err, estatesCount) {
+            if (err) {
+                console.log(err)
+                callback(err);
+            } else {
+                callback(null, estatesCount);
             }
         });
+    },
+    all: function (query, pagination, callback) {
+        query = query || {};
+
+        RealEstate.find(query)
+            .skip(pagination.itemsPerPage * (pagination.page - 1))
+            .limit(pagination.itemsPerPage)
+            .exec(function (err, estates) {
+                if (err) {
+                    console.log(err)
+                    callback(err);
+                } else {
+                    //console.log(estates);
+                    callback(query, estates);
+                }
+            });
     }
 };

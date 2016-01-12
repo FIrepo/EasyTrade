@@ -1,0 +1,48 @@
+extends ../shared/layout
+block main-content
+    a.btn.btn-default(href="/real-estates/create") Add
+
+    form.form-horizontal(method="get" action="/real-estates/search")
+        fieldset
+            .form-group
+                label.control-label.col-md-2(for="type") Type
+                .col-md-4
+                    select.form-control(id="type"   name="type")
+                        option(value="") Select value...
+                        each estate in estatesTypes
+                            option(value=estate) #{estate}
+                label.control-label.col-md-2(for="city") City
+                .col-md-4
+                    input#city.form-control(type='text',name="city" placeholder='City')
+            .form-group
+                label.control-label.col-md-2(for="dealType") Deal Type
+                .col-md-4
+                    select.form-control(id="dealType"  name="dealType")
+                        option(value="") Select value...
+                        each dealType in dealTypes
+                            option(value=dealType) #{dealType}
+                label.control-label.col-md-2(for="quadrature") Quadrature
+                .col-md-4
+                    input#quadrature.form-control(type='text',name="quadrature" min="1" step="0.1")
+            .form-group
+                label.control-label.col-md-2(for="from") Price from $
+                .col-md-4
+                    input.form-control(id="from" min='0' type="number" name="from" step="0.1")
+
+                label.control-label.col-md-2(for="to") Price to $
+                .col-md-4
+                    input.form-control(id="to" type="number" min="0" name="to" step="0.1")
+
+            br
+            .form-group
+                .col-md-offset-2.col-md-10
+                    button.btn.btn-lg.btn-default.col-md-6(type="submit") Search
+                    button.btn.btn-lg.btn-default.col-md-6(type="reset") Cancel
+        if(estates.length==0)
+            h1 No Results
+        else
+            each val in estates
+                li.panel-body
+                    a(href="/real-estates/#{val.id}" )= val.type
+                    br
+                    a(href="/real-estates/#{val.id}" )= val.address
