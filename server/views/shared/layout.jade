@@ -14,14 +14,14 @@ html
             .container-fluid
                 .navbar-header
                     button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#menu")
-                        span.sr-only | Toggle navigation
+                        span.sr-only Toggle navigation
                         span.icon-bar
                         span.icon-bar
                         span.icon-bar
                     a.navbar-brand(href="/") EasyTrade
                 #menu.navbar-collapse.collapse
                     ul.nav.navbar-nav
-                        li.active
+                        li
                             a(href="/") Home
                         li.dropdown
                             a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false") Categories
@@ -48,7 +48,9 @@ html
 
         .container
             if (errorMessage)
-               .alert.alert-danger #{errorMessage}
+               .alert.alert-danger.text-center #{errorMessage}
+            if (infoMessage)
+                .alert.alert-success.text-center #{infoMessage}
 
             block main-content
 

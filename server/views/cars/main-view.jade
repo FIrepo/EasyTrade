@@ -1,0 +1,6 @@
+extends ../shared/layout
+block main-content
+    .container
+        a.btn.btn-default.btn-lg.btn-block(href="/cars/search") Search for a car
+        if (currentUser)
+            a.btn.btn-default.btn-lg.btn-block(href="/cars/create") Create a car advertisement

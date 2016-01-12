@@ -1,0 +1,25 @@
+extends ../shared/layout
+block main-content
+    .panel.panel-default
+        .panel-body.text-center
+            h3 #{allCars.length} cars were found based on your search criteria.
+    .row.text-center
+        ul.pagination
+            - var n = 1, m = 1;
+            while n <= searchPages
+                li
+                    a(href=searchUrl + '&page=' + n++)= m++
+    each car in cars
+        .container.col-md-6
+            .panel.panel-default
+                .panel-heading
+                    h3.panel-title #{car.make + ' ' + car.model}
+                .panel-body
+                    .container.col-md-5
+                        a(href="/cars/details/" + car._id.toString())
+                            img.img-responsive(src=car.imagesUrl alt="car image")
+                    .container.col-md-7
+                        h3 #{car.make + ' ' + car.model}
+                            span.pull-right #{car.price} $
+                        p
+                            strong Production year: #{car.yearOfProduction}, Mileage: #{car.mileage} km, Fuel type: #{car.fuel}, Car location: #{car.location}
