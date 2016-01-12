@@ -9,7 +9,7 @@ module.exports = {
     all: function (query, pagination, callback) {
         query = query || {};
         Car.find(query)
-            //.sort(sort)
+            .sort(pagination.sort)
             .skip(pagination.itemsPerPage * (pagination.page - 1))
             .limit(pagination.itemsPerPage)
             .exec(function (err, cars) {

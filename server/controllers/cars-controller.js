@@ -17,8 +17,6 @@ module.exports = function (app, carsData) {
             newCarData.creator = app.locals.currentUser._id;
             newCarData.dateOfCreation = Date.now();
             newCarData.email = newCarData.email || app.locals.currentUser.email;
-            //newCarData.imagesUrl = newCarData.imagesUrl || '/images/car.jpg';
-
 
             // TODO: Validation
 
@@ -37,7 +35,7 @@ module.exports = function (app, carsData) {
         },
         getAllCars: function (req, res) {
             let query = {},
-                pagination = {},
+                pagination = {sort: '-price'},
                 searchUrl = req.originalUrl,
                 lastIndexOfPage = searchUrl.lastIndexOf('&page'),
                 endIndex = lastIndexOfPage > -1 ? lastIndexOfPage : searchUrl.length,
@@ -67,9 +65,15 @@ module.exports = function (app, carsData) {
                 query.price = query.price || {};
                 query.price['$gt'] = req.query.from;
             }
+
             if (req.query.to) {
                 query.price = query.price || {};
                 query.price['$lt'] = req.query.to;
+            }
+
+            if (req.query.sort) {
+                req.query.direction = req.query.direction || '';
+                pagination.sort = req.query.direction + req.query.sort;
             }
 
             carsData.count(query, function (err, carsCount) {
@@ -93,7 +97,11 @@ module.exports = function (app, carsData) {
                         cars: cars,
                         searchUrl: searchUrl,
                         searchPages: searchPages,
-                        carsCount: carsCount
+                        carsCount: carsCount,
+                        sort: {
+                            orderBy: req.query.sort,
+                            direction: req.query.direction ?  'descending' : 'ascending'
+                        }
                     });
                 })
             });

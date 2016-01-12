@@ -3,6 +3,7 @@ block main-content
     .panel.panel-default
         .panel-body.text-center
             h3 #{carsCount} cars were found based on your search criteria.
+            h4 The results are sorted by #{sort.orderBy} in #{sort.direction} order.
     .row.text-center
         ul.pagination
             - var n = 1, m = 1;
@@ -25,4 +26,4 @@ block main-content
                             h3 #{car.make + ' ' + car.model}
                                 span.pull-right #{car.price} $
                             p
-                                strong Production year: #{car.yearOfProduction}, Mileage: #{car.mileage} km, Fuel type: #{car.fuel}, Car location: #{car.location}
+                                strong Production year: #{car.yearOfProduction}, Horsepower: #{car.power}, Mileage: #{car.mileage} km, Fuel type: #{car.fuel}, Car location: #{car.location}

@@ -37,7 +37,20 @@ block main-content
                 label.control-label.col-md-2(for="to") Price to $
                 .col-md-4
                     input.form-control(id="to" type="number" min="0" name="to" placeholder="Price to")
-
+            br
+            .form-group
+                label.control-label.col-md-2(for="sort") Order by
+                .col-md-4
+                    select.form-control(id="sort"  name="sort")
+                        option(value="price") Price
+                        option(value="power") Horsepower
+                        option(value="location") Location
+                        option(value="model") Model
+                label.control-label.col-md-2(for="direction") Direction
+                .col-md-4
+                    select.form-control(id="direction"  name="direction")
+                        option(value="") Ascending
+                        option(value="-") Descending
             br
             .form-group
                 .col-md-offset-2.col-md-10
