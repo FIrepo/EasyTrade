@@ -2,7 +2,6 @@
 
 let CONTROLLER_NAME = 'cars',
     ITEMS_PER_PAGE = 10,
-    DEFAULT_PAGINATION = {itemsPerPage: Number.MAX_SAFE_INTEGER, page: 1},
     carMakes = ["Acura", "Alfa Romeo", "AMC", "Aston Martin", "Audi", "Avanti", "Bentley", "BMW", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Daewoo", "Daihatsu", "Datsun", "DeLorean", "Dodge", "Eagle", "Ferrari", "FIAT", "Fisker", "Ford", "Freightliner", "Geo", "GMC", "Honda", "HUMMER", "Hyundai", "Infiniti", "Isuzu", "Jaguar", "Jeep", "Kia", "Lamborghini", "Lancia", "Land Rover", "Lexus", "Lincoln", "Lotus", "Maserati", "Maybach", "Mazda", "McLaren", "Mercedes-Benz", "Mercury", "Merkur", "MINI", "Mitsubishi", "Nissan", "Oldsmobile", "Peugeot", "Plymouth", "Pontiac", "Porsche", "RAM", "Renault", "Rolls-Royce", "Saab", "Saturn", "Scion", "smart", "SRT", "Sterling", "Subaru", "Suzuki", "Tesla", "Toyota", "Triumph", "Volkswagen", "Volvo", "Yugo"];
 
 module.exports = function (app, carsData) {
@@ -70,14 +69,14 @@ module.exports = function (app, carsData) {
                 query.price['$lt'] = req.query.to;
             }
 
-            carsData.all(query, DEFAULT_PAGINATION, function (err, allCars) {
+            carsData.count(query, function (err, carsCount) {
                 if (err) {
                     req.session.error = 'Cars cannot be obtained!: ' + err;
                     res.redirect('/');
                     return;
                 }
 
-                searchPages = Math.ceil(allCars.length / ITEMS_PER_PAGE);
+                searchPages = Math.ceil(carsCount / ITEMS_PER_PAGE);
                 pagination.itemsPerPage = ITEMS_PER_PAGE;
 
                 carsData.all(query, pagination, function (err, cars) {
@@ -91,7 +90,7 @@ module.exports = function (app, carsData) {
                         cars: cars,
                         searchUrl: searchUrl,
                         searchPages: searchPages,
-                        allCars: allCars
+                        carsCount: carsCount
                     });
                 })
             });

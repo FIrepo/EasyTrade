@@ -20,6 +20,16 @@ module.exports = {
                 }
             });
     },
+    count: function (query, callback) {
+        query = query || {};
+        Car.count(query, function (err, carsCount) {
+                if (err) {
+                    callback(err);
+                } else {
+                    callback(null, carsCount);
+                }
+            });
+    },
     byId: function (carId, callback) {
         Car.findOne({_id: carId}, function (err, car) {
             if (err) {
