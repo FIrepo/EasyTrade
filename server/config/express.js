@@ -30,6 +30,18 @@ module.exports = function(app, config) {
         next();
     });
     app.use(function(req, res, next) {
+        if (req.session.info) {
+            let msg = req.session.info;
+            req.session.info = undefined;
+            app.locals.infoMessage = msg;
+        }
+        else {
+            app.locals.infoMessage = undefined;
+        }
+
+        next();
+    });
+    app.use(function(req, res, next) {
         if (req.user) {
             app.locals.currentUser = req.user;
         }

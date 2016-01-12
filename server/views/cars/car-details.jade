@@ -26,3 +26,6 @@ block main-content
                                 strong Contact phone: #{car.phone}
                         p
                             strong Description: #{car.description}
+    .col-md-2
+        if(canModerate)
+            a.btn.btn-lg.btn-danger(href='/cars/delete/' + car._id) Delete

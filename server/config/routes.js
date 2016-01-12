@@ -21,6 +21,7 @@ module.exports = function(app) {
     app.post('/cars/create', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).postCreate);
     app.get('/cars/all', controllers['cars-controller'](app, services['cars-data-service']).getAllCars);
     app.get('/cars/search', controllers['cars-controller'](app, services['cars-data-service']).getSearch);
+    app.get('/cars/delete/:id', controllers['cars-controller'](app, services['cars-data-service']).deleteCar);
     app.get('/cars/details/:id', controllers['cars-controller'](app, services['cars-data-service']).getCar);
 
 

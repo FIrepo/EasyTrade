@@ -6,23 +6,23 @@ block main-content
                 label.control-label.col-md-2(for="make") Make
                 .col-md-4
                     select.form-control(id="make"   name="make")
-                        option(value="")
+                        option(value="") Select value...
                         each make in carMakes
                             option(value=make) #{make}
                 label.control-label.col-md-2(for="model") Model
                 .col-md-4
                     input.form-control(id="model" type="text"  name="model" placeholder="Model")
             .form-group
-                label.control-label.col-md-2(for="transmission") Transmission*
+                label.control-label.col-md-2(for="transmission") Transmission
                 .col-md-4
                     select.form-control(id="transmission"  name="transmission")
-                        option(value="")
+                        option(value="") Select value...
                         option(value="automatic") Automatic
                         option(value="manual") Manual
                 label.control-label.col-md-2(for="fuel") Fuel
                 .col-md-4
                     select.form-control(id="fuel"  name="fuel")
-                        option(value="")
+                        option(value="") Select value...
                         option(value="petrol") Petrol
                         option(value="diesel") Diesel
                         option(value="hybrid") Hybrid
@@ -43,5 +43,3 @@ block main-content
                 .col-md-offset-2.col-md-10
                     button.btn.btn-lg.btn-default.col-md-6(type="submit") Search
                     button.btn.btn-lg.btn-default.col-md-6(type="reset") Cancel
-    .alert.alert-dismissable.col-md-10.col-md-offset-2
-        p.text-center Fields marked with * are required.
