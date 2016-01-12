@@ -117,17 +117,52 @@ module.exports = function (app, carsData) {
                 }
             });
         },
-        updateCar: function (req, res) {
-            if (app.locals.currentUser
-                && ((app.locals.currentUser.role == 'admin') || (app.locals.currentUser._id === req.body.creator._id))) {
-                carsData.update(req.body._id, req.body, function (updatedCar) {
-                    res.render(CONTROLLER_NAME + '/car-details', {car: updatedCar});
-                })
-            }
-            else {
-                req.session.error = 'You do not have sufficient rights to update the car advertisement with the provided id: ' + err;
-                res.redirect('/cars/search');
-            }
+        getUpdate: function (req, res) {
+            let carId = req.params.id;
+            carsData.byId({_id: carId}, function (err, car) {
+                if (err) {
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                    res.redirect('/cars/search');
+                    return;
+                }
+                if (app.locals.currentUser
+                    && ((app.locals.currentUser.role == 'admin')
+                    || (app.locals.currentUser._id.id === car.creator.id))) {
+                    res.render(CONTROLLER_NAME + '/update', {car: car, carMakes: carMakes});
+                }
+                else {
+                    req.session.error = 'You do not have sufficient rights to update the specified car advertisement.';
+                    res.redirect('/cars/search');
+                }
+            });
+        },
+        postUpdate: function (req, res) {
+            let carId = req.params.id;
+            carsData.byId({_id: carId}, function (err, car) {
+                if (err) {
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                    res.redirect('/cars/search');
+                    return;
+                }
+                if (app.locals.currentUser
+                    && ((app.locals.currentUser.role == 'admin')
+                    || (app.locals.currentUser._id.id === car.creator.id))) {
+
+                    carsData.update(req.params.id, req.body, function (err) {
+                        if (err) {
+                            req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                            res.redirect('/cars/search');
+                            return;
+                        }
+                        req.session.info = `${car.make} ${car.model} updated successfully.`;
+                        res.redirect('/cars/details/' + req.params.id);
+                    })
+                }
+                else {
+                    req.session.error = 'You do not have sufficient rights to update the specified car advertisement.';
+                    res.redirect('/cars/search');
+                }
+            });
         },
         deleteCar: function (req, res) {
             carsData.byId(req.params.id, function (err, carToDelete) {
@@ -148,7 +183,6 @@ module.exports = function (app, carsData) {
                     req.session.error = 'You do not have sufficient rights to delete the car advertisement with the provided id.';
                     res.redirect('/cars/details/' + req.params.id);
                 }
-
             });
         }
     };

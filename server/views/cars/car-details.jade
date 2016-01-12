@@ -24,8 +24,9 @@ block main-content
                         if(car.phone)
                             p
                                 strong Contact phone: #{car.phone}
-                        p
+                        p(style="word-wrap:break-word")
                             strong Description: #{car.description}
     .col-md-2
         if(canModerate)
-            a.btn.btn-lg.btn-danger(href='/cars/delete/' + car._id) Delete
+            a.btn.btn-lg.btn-primary(href='/cars/update/' + car._id) UPDATE
+            a.btn.btn-lg.btn-danger(href='/cars/delete/' + car._id) DELETE
