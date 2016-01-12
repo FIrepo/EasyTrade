@@ -11,19 +11,17 @@ module.exports = function(app) {
     app.get('/login', controllers['users-controller'](app, services['users-data-service']).getLogin);
     app.post('/login', auth.login);
     app.get('/logout', auth.isAuthenticated, auth.logout);
-
     app.get('/all-users', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
     app.get('/profile', auth.isAuthenticated, function(req, res){
         res.render('users/profile');
     });
-    app.get('/profile/:username', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
     app.post('/profile', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).updateUser);
+    app.get('/profile/:username', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
+    app.post('/profile/:username', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).updateUser);
     app.get('/profile/delete/:id', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).deleteUser);
     app.get('/admin-panel', auth.isAuthenticated, function(req, res){
         res.render('users/admin-panel');
     });
-
-    app.get('/all-users', controllers['users-controller'](app, services['users-data-service']).getAllUsers);
 
     app.get('/real-estates/create', controllers['realestates-controller']().getCreateForm);
     app.post('/real-estates/create', controllers['realestates-controller']().create);

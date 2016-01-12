@@ -75,7 +75,7 @@ module.exports = function (app, usersData) {
                 if (newUserData.password) {
                     if (newUserData.password && newUserData.password.length < 6) {
                         req.session.error = 'Password should be at least 6 characters long!';
-                        res.redirect('/register');
+                        res.redirect('back');
                     } else {
                         newUserData.salt = encryption.generateSalt();
                         newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
@@ -84,7 +84,7 @@ module.exports = function (app, usersData) {
 
                 usersData.update(newUserData.username, req.body, function (updatedUser) {
                     app.locals.currentUser = updatedUser;
-                    res.redirect('/profile');
+                    res.redirect('back');
                 })
             } else {
                 req.session.error = 'Not for you';
