@@ -8,6 +8,15 @@ module.exports = {
         console.log(realEstate);
         RealEstate.create(realEstate, callback);
     },
+    update: function (estate, callback) {
+        RealEstate.update({_id: estate.id}, estate, function (err, estate) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, estate);
+            }
+        })
+    },
     findById: function(id,callback){
         RealEstate.findById(id, function(err, realEstate){
             if(err){

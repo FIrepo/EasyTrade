@@ -54,10 +54,14 @@ module.exports = function () {
                 }
             });
         },
-        edit: function(req,res,next){
+        edit: function (req, res, next) {
             let realEstate = req.body;
-            console.log(realEstate);
-            console.log('In edit...')
+            realEstate.id = req.url.substr(req.url.lastIndexOf('/')+1);
+
+            data.update(realEstate, function (err, callback) {
+                res.redirect('/real-estates');
+                res.end();
+            })
         }
     };
 };
