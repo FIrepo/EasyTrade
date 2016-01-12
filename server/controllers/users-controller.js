@@ -47,7 +47,7 @@ module.exports = function (app, usersData) {
                 params = req.params,
                 api = req.url.indexOf('api') !== -1;
             if (app.locals.currentUser && app.locals.currentUser.role === 'admin') {
-                usersData.all(params, function(responseModelUsers) {
+                usersData.all(params, function(err, responseModelUsers) {
                     if(view === 'single'){
                         if(api){
                             res.send(responseModelUsers[0]);

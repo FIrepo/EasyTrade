@@ -12,13 +12,23 @@ module.exports = {
             if(err){
                 callback(err);
             } else {
-                callback(users);
+                callback(null, users);
+            }
+        });
+    },
+    one: function(query, callback){
+        query = query || {};
+        User.findOne(query, function(err, user){
+            if(err){
+                callback(err);
+            } else {
+                callback(null, user);
             }
         });
     },
     update: function(username, newProps, callback){
-        this.all({username: username}, function(users){
-            callback(users[0].update(newProps));
+        this.one({username: username}, function(err,user){
+            callback(null, user.update(newProps));
         })
     },
     delete: function(username, callback){
