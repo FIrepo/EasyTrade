@@ -2,7 +2,7 @@
 
 let mongoose = require('mongoose'),
     transmissionTypes = ['manual', 'automatic'],
-    forbiddenCharacters = [' ', '<', '>', '(', ')', ','],
+    forbiddenCharacters = ['<', '>', '(', ')', '='],
     validateString = function(field){
         return {
             validator: function (val) {
@@ -62,10 +62,12 @@ module.exports.init = function () {
         },
         location: {
             type: String,
-            required: true
+            required: true,
+            validate: validateString('Location')
         },
         description: {
-            type: String
+            type: String,
+            validate: validateString('Description')
         },
         imagesUrl: {
             type: String
@@ -90,7 +92,8 @@ module.exports.init = function () {
         },
         email: {
             type: String,
-            required: true
+            required: true,
+            validate: validateString('E-mail')
         }
     });
 

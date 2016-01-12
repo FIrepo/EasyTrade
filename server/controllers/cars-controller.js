@@ -17,7 +17,9 @@ module.exports = function (app, carsData) {
             newCarData.creator = app.locals.currentUser._id;
             newCarData.dateOfCreation = Date.now();
             newCarData.email = newCarData.email || app.locals.currentUser.email;
-            newCarData.imagesUrl = newCarData.imagesUrl || '/images/car.jpg';
+            //newCarData.imagesUrl = newCarData.imagesUrl || '/images/car.jpg';
+
+
             // TODO: Validation
 
             carsData.create(newCarData, function (err, car) {
@@ -26,6 +28,7 @@ module.exports = function (app, carsData) {
                     res.redirect('/cars/create');
                     return;
                 }
+                req.session.info = `${car.make} ${car.model} created successfully.`;
                 res.redirect('/cars/details/' + car._id);
             });
         },

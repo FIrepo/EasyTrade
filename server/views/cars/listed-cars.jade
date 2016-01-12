@@ -15,11 +15,14 @@ block main-content
                 .panel-heading
                     h3.panel-title #{car.make + ' ' + car.model}
                 .panel-body
-                    .container.col-md-5
-                        a(href="/cars/details/" + car._id.toString())
-                            img.img-responsive(src=car.imagesUrl alt="car image")
-                    .container.col-md-7
-                        h3 #{car.make + ' ' + car.model}
-                            span.pull-right #{car.price} $
-                        p
-                            strong Production year: #{car.yearOfProduction}, Mileage: #{car.mileage} km, Fuel type: #{car.fuel}, Car location: #{car.location}
+                    a(href="/cars/details/" + car._id.toString())
+                        .container.col-md-5
+                            if(car.imagesUrl)
+                                img.img-responsive(src=car.imagesUrl alt="car image")
+                            else
+                                img.img-responsive(src="/images/car.jpg" alt="car image")
+                        .container.col-md-7
+                            h3 #{car.make + ' ' + car.model}
+                                span.pull-right #{car.price} $
+                            p
+                                strong Production year: #{car.yearOfProduction}, Mileage: #{car.mileage} km, Fuel type: #{car.fuel}, Car location: #{car.location}

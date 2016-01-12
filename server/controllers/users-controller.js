@@ -22,7 +22,7 @@ module.exports = function (app, usersData) {
                 newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
                 usersData.create(newUserData, function (err, user) {
                     if (err) {
-                        req.session.error = 'Failed to register new user: ' + err;
+                        req.session.error = 'Failed to register new user.' + err.errmsg;
                         res.redirect('/register');
                         return;
                     }
@@ -33,6 +33,7 @@ module.exports = function (app, usersData) {
                             return res.send({reason: err.toString()});
                         }
                         else {
+                            req.session.info = `${user.username} registered and logged in successfully.`;
                             res.redirect('/');
                         }
                     })
@@ -84,10 +85,11 @@ module.exports = function (app, usersData) {
 
                 usersData.update(newUserData.username, req.body, function (updatedUser) {
                     app.locals.currentUser = updatedUser;
+                    req.session.info = `${updatedUser.username} updated successfully.`;
                     res.redirect('back');
                 })
             } else {
-                req.session.error = 'Not for you';
+                req.session.error = 'You do not have sufficient permissions to access this page!';
                 res.redirect('/');
             }
         },
@@ -100,10 +102,11 @@ module.exports = function (app, usersData) {
                 usersData.delete(username, function () {
                     req.method = 'GET';
                     req.logout();
+                    req.session.info = `${username} deleted successfully.`;
                     res.redirect('/');
                 });
             } else {
-                req.session.error = 'Not for you';
+                req.session.error = 'You do not have sufficient permissions to access this page!';
                 res.redirect('/');
             }
         }

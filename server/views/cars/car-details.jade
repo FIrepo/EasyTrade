@@ -6,7 +6,10 @@ block main-content
                     h3.panel-title
                 .panel-body
                     .container.col-md-6
-                        img.img-responsive(src=car.imagesUrl alt="car image")
+                        if(car.imagesUrl)
+                            img.img-responsive(src=car.imagesUrl alt="car image")
+                        else
+                            img.img-responsive(src="/images/car.jpg" alt="car image")
                     .container.col-md-6
                         h2 #{car.make} #{car.model}
                         p
