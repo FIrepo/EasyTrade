@@ -20,7 +20,7 @@ module.exports = function (app, data) {
         create: function (req, res) {
             let newRealEstate = req.body;
             newRealEstate.creator = app.locals.currentUser._id;
-
+            newRealEstate.image = newRealEstate.image || 'estate.jpg';
             data.create(newRealEstate, function (err, data) {
                 if (err) {
                     req.session.error = 'Failed to create new real estate advertisement: ' + err.errmsg;
