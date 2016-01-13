@@ -22,7 +22,7 @@ module.exports = {
     },
     getLast: function(number, callback){
 
-        Car.find()
+        Car.find({})
             .sort({dateOfCreation: -1})
         .limit(number)
         .exec(callback);

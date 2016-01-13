@@ -1,9 +1,0 @@
-extends ../shared/layout
-block main-content
-    a.btn.btn-success(href="/real-estates/create") Add
-    ul
-        each val in estates
-            li.panel-body
-                a(href="/real-estates/#{val.id}" )= val.type
-                br
-                a(href="/real-estates/#{val.id}" )= val.address

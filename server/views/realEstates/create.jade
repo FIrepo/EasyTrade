@@ -1,6 +1,6 @@
 extends ../shared/layout
 block main-content
-    form.form-horizontal(method="post", action="/real-estates/create")
+    form.form-horizontal(method="post", action="/real-estates/create", enctype="multipart/form-data")
         fieldset
             legend Create Real Estate
             .form-group
@@ -37,11 +37,11 @@ block main-content
                 .col-lg-10
                     textarea#description.form-control(name="moreInformation",placeholder='More Information...')
             .form-group
-                label.col-lg-2.control-label(for="images") Images
+                label.col-lg-2.control-label(for="image") Image
                 .col-lg-10
-                    input#images(type="file" multiple="multiple" name="images")
+                    input#image.form-control(type="file" name="image")
 
             .form-group
                 .col-lg-10.col-lg-offset-2
-                    a.btn.btn-default.pull-right(href="/") Cancel
-                    button.btn.btn-primary.pull-right Create
+                    a.btn.btn-default.pull-right(href='/') Cancel
+                    button.btn.btn-default.pull-right Create
