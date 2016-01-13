@@ -140,7 +140,20 @@ module.exports = function (app) {
                 res.end();
             })
         },
-        deleteEstate: function () {
+        deleteEstate: function (req, res, next) {
+            console.log('..IN DELETE...');
+            if (app.locals.currentUser == undefined) {
+                res.redirect('/real-estates');
+            } else {
+
+                //let realEstate = req.body;
+                let id = req.url.substr(req.url.lastIndexOf('/')+1);
+                data.delete(id, function (err, callback) {
+                    res.redirect('/real-estates');
+                    res.end();
+                })
+            }
+
         }
     };
 };

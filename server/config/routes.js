@@ -38,10 +38,9 @@ module.exports = function (app) {
 
     app.get('/real-estates/search', controllers['realestates-controller'](app).getSearch);
     app.get('/real-estates/create', controllers['realestates-controller'](app).getCreateForm);
-
     app.post('/real-estates/create', upload.single('image'), controllers['realestates-controller'](app).create);
-
     app.get('/real-estates', controllers['realestates-controller'](app).getSearch);
+    app.post('/real-estates/delete/:id', controllers['realestates-controller'](app).deleteEstate);
     app.get('/real-estates/:id', controllers['realestates-controller'](app).getRealEstate);
     app.get('/real-estates/:id/edit', controllers['realestates-controller'](app).getEditView);
     app.post('/real-estates/:id', controllers['realestates-controller'](app).edit);

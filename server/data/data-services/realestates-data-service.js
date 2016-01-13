@@ -5,7 +5,6 @@ let RealEstate = mongoose.model('RealEstate');
 
 module.exports = {
     create: function (realEstate, callback) {
-        console.log(realEstate);
         RealEstate.create(realEstate, callback);
     },
     findById: function (id, callback) {
@@ -45,7 +44,6 @@ module.exports = {
             .limit(pagination.itemsPerPage)
             .exec(function (err, estates) {
                 if (err) {
-                    console.log(err)
                     callback(err);
                 } else {
                     callback(query, estates);
@@ -53,14 +51,15 @@ module.exports = {
             });
     },
     delete: function (id, callback) {
-        RealEstate.remove(req.params.id, function (err, res) {
-            if (err) {
-                console.log('Estate cannot be removed: ' + err);
-                callback(err);
-            } else {
-                callback(res);
-            }
-        });
+        RealEstate.remove({_id: id})
+            .exec(function (err, res) {
+                if (err) {
+                    console.log('Estate cannot be removed: ' + err);
+                    callback(err);
+                } else {
+                    callback(res);
+                }
+            });
     },
     getLast: function (number, callback) {
 
