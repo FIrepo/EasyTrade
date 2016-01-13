@@ -1,6 +1,6 @@
 'use strict';
 
-let data = require('../data/data-services/realEstates-data-service');
+//let data = require('../data/data-services/realEstates-data-service');
 let CONTROLLER_NAME = 'realEstates',
     ITEMS_PER_PAGE = 10,
     realEstateTypes = ['One-room apartement', 'Two-room apartement', 'Tree-room apartement', 'Four-room apartement',
@@ -8,16 +8,16 @@ let CONTROLLER_NAME = 'realEstates',
         'Shop', 'Garage', 'Hotel'],
     dealTypes = ['Rent', 'Sold'];
 
-module.exports = function (app) {
+module.exports = function (app, data) {
     return {
-        getCreateForm: function (req, res, next) {
+        getCreateForm: function (req, res) {
             if (app.locals.currentUser == undefined) {
                 res.redirect('/real-estates');
             } else {
                 res.render(CONTROLLER_NAME + '/create', {estates: realEstateTypes, deals: dealTypes});
             }
         },
-        create: function (req, res, next) {
+        create: function (req, res) {
             let newRealEstate = req.body;
             newRealEstate.creator = app.locals.currentUser._id;
 
@@ -32,7 +32,7 @@ module.exports = function (app) {
                 res.redirect('/real-estates');
             });
         },
-        getRealEstate: function (req, res, next) {
+        getRealEstate: function (req, res) {
             let estateModerate = false;
             data.findById(req.params.id, function (err, estate) {
                 if (err) {
@@ -54,7 +54,7 @@ module.exports = function (app) {
                 }
             });
         },
-        getEditView: function (req, res, next) {
+        getEditView: function (req, res) {
             data.findById(req.params.id, function (err, estate) {
                 if (err) {
                     req.session.error = 'The real estate advertisement with the provided id cannot be obtained: ' + err.errmsg;
@@ -70,7 +70,7 @@ module.exports = function (app) {
                 }
             });
         },
-        getSearch: function (req, res, next) {
+        getSearch: function (req, res) {
             let query = {},
                 pagination = {},
                 searchUrl = req.originalUrl,
@@ -132,7 +132,7 @@ module.exports = function (app) {
                 })
             })
         },
-        edit: function (req, res, next) {
+        edit: function (req, res) {
             let realEstate = req.body;
             realEstate.id = req.url.substr(req.url.lastIndexOf('/') + 1);
             data.update(realEstate, function (err, callback) {
@@ -140,20 +140,18 @@ module.exports = function (app) {
                 res.end();
             })
         },
-        deleteEstate: function (req, res, next) {
+        deleteEstate: function (req, res) {
             console.log('..IN DELETE...');
             if (app.locals.currentUser == undefined) {
                 res.redirect('/real-estates');
             } else {
-
                 //let realEstate = req.body;
-                let id = req.url.substr(req.url.lastIndexOf('/')+1);
+                let id = req.url.substr(req.url.lastIndexOf('/') + 1);
                 data.delete(id, function (err, callback) {
                     res.redirect('/real-estates');
                     res.end();
                 })
             }
-
         }
     };
 };
