@@ -11,7 +11,7 @@ module.exports = {
         Car.find(query)
             .sort(pagination.sort)
             .skip(pagination.itemsPerPage * (pagination.page - 1))
-            .limit(pagination.itemsPerPage)
+            .limit(pagination.itemsPerfindPage)
             .exec(function (err, cars) {
                 if (err) {
                     callback(err);
@@ -21,7 +21,6 @@ module.exports = {
             });
     },
     getLast: function(number, callback){
-
         Car.find({})
             .sort({dateOfCreation: -1})
         .limit(number)

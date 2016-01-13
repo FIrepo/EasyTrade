@@ -23,7 +23,11 @@ block main-content
                                 h3 #{car.make + ' ' + car.model}
                                 strong Price: #{car.price}
                                 br
-                                strong Year: #{car.yearOfProduction}
+                                strong Production year: #{car.yearOfProduction}
+                                br
+                                strong Engine type: #{car.fuel}
+                                br
+                                strong Transmission type: #{car.transmission}
                             td
                                 a.btn.btn-primary(href="/cars/details/" + car._id.toString()) Details
         .col-md-6
@@ -39,9 +43,13 @@ block main-content
                             td
                                 img.img-responsive(src=e.imagesUrl alt="real estate image")
                             td
-                                h3 #{e.type + ' ' + e.quadrature + ' sq.m.'}
+                                h3 #{e.type}
+                                strong Quadrature: #{e.quadrature} sq.m.
+                                br
                                 strong Price: #{e.price}
                                 br
-                                strong Year: #{e.dealType}
+                                strong Deal type: #{e.dealType}
+                                br
+                                strong City: #{e.city}
                             td
                                 a.btn.btn-primary(href="/real-estates/" + e._id.toString()) Details

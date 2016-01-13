@@ -4,8 +4,9 @@ block main-content
     .panel.panel-warning
         .panel-heading
             h3.panel-title Image
-        .panel-body
-            img(src="images/#{estate.image}")
+        .panel-body.row
+            .container.col-md-6
+                img.img-responsive(src="images/#{estate.image}")
     .panel.panel-warning
         .panel-heading
             h3.panel-title Address
