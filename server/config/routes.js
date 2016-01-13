@@ -36,14 +36,14 @@ module.exports = function (app) {
         res.render('users/admin-panel');
     });
 
-    app.get('/real-estates/search', controllers['realestates-controller']().getSearch);
-    app.get('/real-estates/create', controllers['realestates-controller']().getCreateForm);
+    app.get('/real-estates/search', controllers['realestates-controller'](app).getSearch);
+    app.get('/real-estates/create', controllers['realestates-controller'](app).getCreateForm);
 
-    app.post('/real-estates/create', upload.single('image'), controllers['realestates-controller']().create);
+    app.post('/real-estates/create', upload.single('image'), controllers['realestates-controller'](app).create);
 
-    app.get('/real-estates', controllers['realestates-controller']().getSearch);
-    app.get('/real-estates/:id', controllers['realestates-controller']().getRealEstate);
-    app.get('/real-estates/:id/edit', controllers['realestates-controller']().getEditView);
+    app.get('/real-estates', controllers['realestates-controller'](app).getSearch);
+    app.get('/real-estates/:id', controllers['realestates-controller'](app).getRealEstate);
+    app.get('/real-estates/:id/edit', controllers['realestates-controller'](app).getEditView);
     app.post('/real-estates/:id', controllers['realestates-controller'](app).edit);
 
     app.get('/cars', controllers['cars-controller'](app, services['cars-data-service']).getMainView);

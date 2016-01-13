@@ -35,7 +35,10 @@ module.exports.init = function () {
             default: new Date()
         },
         image: { type: String },
-        test: String,
+        creator: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
         moreInformation: String
     });
 
