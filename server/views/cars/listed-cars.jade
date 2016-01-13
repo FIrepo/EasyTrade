@@ -2,8 +2,12 @@ extends ../shared/layout
 block main-content
     .panel.panel-default
         .panel-body.text-center
-            h3 #{carsCount} cars were found based on your search criteria.
-            h4 The results are sorted by #{sort.orderBy} in #{sort.direction} order.
+            h3 #[strong #{carsCount}] cars were found based on your search criteria.
+            h4 The results are sorted by #[strong #{sort.orderBy}] in #[strong #{sort.direction}] order.
+    .container.row
+        a.btn.btn-default.btn-lg.btn-block(href="/cars/search") New car search
+        if (currentUser)
+            a.btn.btn-default.btn-lg.btn-block(href="/cars/create") Create a car advertisement
     .row.text-center
         ul.pagination
             - var n = 1, m = 1;

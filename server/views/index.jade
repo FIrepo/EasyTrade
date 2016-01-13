@@ -15,7 +15,10 @@ block main-content
                     each car in cars
                         tr
                             td
-                                img.img-responsive(src=car.imagesUrl alt="car image")
+                                if(car.imagesUrl)
+                                    img.img-responsive(src=car.imagesUrl alt="car image")
+                                else
+                                    img.img-responsive(src="/images/car.jpg" alt="car image")
                             td
                                 h3 #{car.make + ' ' + car.model}
                                 strong Price: #{car.price}
