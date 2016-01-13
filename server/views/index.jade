@@ -41,7 +41,7 @@ block main-content
                     each e in re
                         tr
                             td
-                                img.img-responsive(src=e.imagesUrl alt="real estate image")
+                                img.img-responsive(src="images/#{e.image}" alt="real estate image")
                             td
                                 h3 #{e.type}
                                 strong Quadrature: #{e.quadrature} sq.m.
