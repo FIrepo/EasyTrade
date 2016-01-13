@@ -20,6 +20,13 @@ module.exports = {
                 }
             });
     },
+    getLast: function(number, callback){
+
+        Car.find()
+            .sort({dateOfCreation: -1})
+        .limit(number)
+        .exec(callback);
+    },
     count: function (query, callback) {
         query = query || {};
         Car.count(query, function (err, carsCount) {

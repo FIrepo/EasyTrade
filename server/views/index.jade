@@ -2,3 +2,42 @@ extends shared/layout
 block main-content
     .jumbotron
         h1.text-center Welcome to EasyTrade
+    .container.row
+        .col-md-6
+            h1.text-center Cars
+            table.table.table-striped.table-hover
+                thead
+                    th.col-md-5 Image
+                    th.col-md-5 Info
+                    th.col-md-2 Details
+                tbody
+                    each car in cars
+                        tr
+                            td
+                                img.img-responsive(src=car.imagesUrl alt="car image")
+                            td
+                                h3 #{car.make + ' ' + car.model}
+                                strong Price: #{car.price}
+                                br
+                                strong Year: #{car.yearOfProduction}
+                            td
+                                a.btn.btn-primary(href="/cars/details/" + car._id.toString()) Details
+        .col-md-6
+            h1.text-center Real Estates
+            table.table.table-striped.table-hover
+                thead
+                    th.col-md-5 Image
+                    th.col-md-5 Info
+                    th.col-md-2 Details
+                tbody
+                    each e in re
+                        tr
+                            td
+                                img.img-responsive(src=e.imagesUrl alt="car image")
+                            td
+                                h3 #{e.type + ' ' + e.quadrature + ' sq.m.'}
+                                strong Price: #{e.price}
+                                br
+                                strong Year: #{e.dealType}
+                            td
+                                a.btn.btn-primary(href="/cars/details/" + e._id.toString()) Details

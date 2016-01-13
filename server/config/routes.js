@@ -2,7 +2,8 @@
 
 let auth = require('./auth'),
     controllers = require('../controllers'),
-    services = require('../data/data-services');
+    services = require('../data/data-services'),
+    http = require('http');
 
 module.exports = function(app) {
     app.get('/api/all-users', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
@@ -41,11 +42,7 @@ module.exports = function(app) {
     app.get('/cars/details/:id', controllers['cars-controller'](app, services['cars-data-service']).getCar);
 
 
-
-
-    app.get('/', function(req, res) {
-        res.render('index');
-    });
+    app.get('/', controllers['home-controller'](app, services['cars-data-service'], services['realestates-data-service']).getLast);
 
     app.get('*', function(req, res) {
         res.redirect('/');

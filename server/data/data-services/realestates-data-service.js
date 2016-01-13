@@ -35,5 +35,12 @@ module.exports = {
                 callback(null, realEstates);
             }
         });
+    },
+    getLast: function(number, callback){
+
+        RealEstate.find()
+            .sort({dateOfCreation: -1})
+            .limit(number)
+            .exec(callback);
     }
 };
