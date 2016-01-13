@@ -1,16 +1,16 @@
 'use strict';
 
 let fs = require('fs'),
-    path = './server/controllers',
+    path = require('path'),
     controllers = {};
 
-(function() {
+(function () {
     console.log('Loading controllers...');
-    fs.readdirSync(path)
+    fs.readdirSync(__dirname)
         .filter(file => file.indexOf('controller') !== -1)
         .forEach(file => {
             let controllerName = file.substring(0, file.lastIndexOf('.'));
-            controllers[`${controllerName}`] = require('./' + file);
+            controllers[`${controllerName}`] = require(path.join(__dirname, file));
         });
 }());
 

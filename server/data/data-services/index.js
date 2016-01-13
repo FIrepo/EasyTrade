@@ -1,16 +1,16 @@
 'use strict';
 
 let fs = require('fs'),
-    path = './server/data/data-services',
+    path = require('path'),
     services = {};
 
 (function() {
     console.log('Loading services...');
-    fs.readdirSync(path)
+    fs.readdirSync(__dirname)
         .filter(file => file.indexOf('service') !== -1)
         .forEach(file => {
             let serviceName = file.substring(0, file.lastIndexOf('.'));
-            services[`${serviceName}`] = require('./' + file);
+            services[`${serviceName}`] = require(path.join(__dirname, file));
         });
 }());
 
