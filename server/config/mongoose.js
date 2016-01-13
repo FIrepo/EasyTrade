@@ -4,7 +4,7 @@ let mongoose = require('mongoose'),
     models = require('../data/models');
 
 module.exports = function(config) {
-    mongoose.connect(config.db);
+    mongoose.connect(config.mongoLabDb);
     let db = mongoose.connection;
 
     db.once('open', function(err) {
@@ -13,7 +13,7 @@ module.exports = function(config) {
             return;
         }
 
-        console.log('Database up and running...')
+        console.log('Database up and running...');
     });
 
     db.on('error', function(err){
