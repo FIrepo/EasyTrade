@@ -1,6 +1,6 @@
 extends ../shared/layout
 block main-content
-    a.btn.btn-default(href="/real-estates/create") Add
+
 
     form.form-horizontal(method="get" action="/real-estates/search")
         fieldset
@@ -37,7 +37,7 @@ block main-content
             .form-group
                 .col-md-offset-2.col-md-10
                     button.btn.btn-lg.btn-default.col-md-6(type="submit") Search
-                    button.btn.btn-lg.btn-default.col-md-6(type="reset") Cancel
+                    a.btn.btn-lg.btn-default.col-md-6(href="/real-estates/create") Add
         if(estates.length==0)
             h1 No Results
         else
