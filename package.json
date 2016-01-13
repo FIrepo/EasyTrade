@@ -9,6 +9,10 @@
     "start": "nodemon server.js",
     "postinstall": "bower install"
   },
+  "engines": {
+    "node": "5.3.x",
+    "npm": "2.11.x"
+  },
   "dependencies": {
     "body-parser": "^1.14.2",
     "connect-busboy": "0.0.2",
