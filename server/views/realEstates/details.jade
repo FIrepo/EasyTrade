@@ -2,28 +2,32 @@ extends ../shared/layout
 block main-content
     form(method="post", action="/real-estates/delete/#{estate.id}")
         h1.text-center= estate.type
-        .panel.panel-warning
-            .panel-heading
-                h3.panel-title Image
-            .panel-body
-                img(src="images/#{estate.image}")
-        .panel.panel-warning
-            .panel-heading
-                h3.panel-title Address
-            .panel-body
-                div=estate.city
-                div=estate.address
-        .panel.panel-warning
-            .panel-heading
-                h3.panel-title Price
-            .panel-body
-                div=estate.price
-        .panel.panel-warning
-            .panel-heading
-                h3.panel-title More information
-            .panel-body
-                div=estate.quadrature
-                div=estate.moreInformation
+        .container.col-md-12
+            .panel.panel-default
+                .panel-heading
+                    h3.panel-title
+                .panel-body
+                    .container.col-md-6
+                        if(estate.image)
+                            img.img-responsive(src="images/#{estate.image}" alt="estate image")
+                        else
+                            img.img-responsive(src="/images/estate.jpg" alt="estate image")
+                    .container.col-md-6
+                        h2 #{estate.type}
+                        p
+                            strong City: #{estate.city}
+                        p
+                            strong Address: #{estate.address}
+                        p
+                            strong Price: #{estate.price}
+                        p
+                            strong Quadrature: #{estate.quadrature}
+                        p
+                            strong Deal Type: #{estate.dealType}
+                        p
+                            strong Mode Info: #{estate.moreInformation}
+        .col-md-2
         if(estateModerate)
-            a.btn.btn-warning.pull-right(href='/real-estates/#{estate.id}/edit') Edit
-            button.btn.btn-warning.pull-right(type='submit') Delete
+            a.btn.btn-lg.btn-primary.col-md-12(href='/real-estates/#{estate.id}/edit') Edit
+            br
+            button.btn.btn-lg.btn-danger.col-md-12(type='submit') Delete

@@ -1,7 +1,7 @@
 extends ../shared/layout
 block main-content
-
-
+    h1.text-center Real Estates
+    br
     form.form-horizontal(method="get" action="/real-estates/search")
         fieldset
             .form-group
@@ -44,19 +44,23 @@ block main-content
         if(estates.length==0)
             h1 No Results
         else
-            table.table-bordered
-                tr.col-md-12
-                   th.col-md-3 Type
-                   th.col-md-3 City
-                   th.col-md-3 Address
-                   th.col-md-3 Quadrature
-                   th.col-md-3 Price
-                each val in estates
-                    tr.col-md-12
-                        td.col-md-3
-                            a(href="/real-estates/#{val.id}")= val.type
-                        td.col-md-3=val.city
-                        td.col-md-3=val.address
-                        td.col-md-3=val.quadrature
-                        td.col-md-3=val.price
+            table.table.table-striped.table-hover
+                thead
+                   th.col-md-2
+                   th.col-md-2 Type
+                   th.col-md-2 City
+                   th.col-md-2 Address
+                   th.col-md-2 Quadrature
+                   th.col-md-2 Price
+                tbody
+                    each estate in estates
+                        tr
+                            td.col-md-2
+                                img.img-responsive(src="/images/#{estate.image}")
+                            td.col-md-2
+                                a(href="/real-estates/#{estate.id}")= estate.type
+                            td.col-md-2=estate.city
+                            td.col-md-2=estate.address
+                            td.col-md-2=estate.quadrature
+                            td.col-md-2=estate.price
         br
