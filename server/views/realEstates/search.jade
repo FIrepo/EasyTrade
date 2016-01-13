@@ -41,8 +41,19 @@ block main-content
         if(estates.length==0)
             h1 No Results
         else
-            each val in estates
-                li.panel-body
-                    a(href="/real-estates/#{val.id}" )= val.type
-                    br
-                    a(href="/real-estates/#{val.id}" )= val.address
+            table.table-bordered
+                tr.col-md-12
+                   th.col-md-3 Type
+                   th.col-md-3 City
+                   th.col-md-3 Address
+                   th.col-md-3 Quadrature
+                   th.col-md-3 Price
+                each val in estates
+                    tr.col-md-12
+                        td.col-md-3
+                            a(href="/real-estates/#{val.id}")= val.type
+                        td.col-md-3=val.city
+                        td.col-md-3=val.address
+                        td.col-md-3=val.quadrature
+                        td.col-md-3=val.price
+        br

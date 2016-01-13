@@ -4,15 +4,15 @@ let mongoose = require('mongoose');
 let RealEstate = mongoose.model('RealEstate');
 
 module.exports = {
-    create: function(realEstate, callback) {
+    create: function (realEstate, callback) {
         RealEstate.create(realEstate, callback);
     },
-    findById: function(id,callback){
-        RealEstate.findById(id, function(err, realEstate){
-            if(err){
+    findById: function (id, callback) {
+        RealEstate.findById(id, function (err, realEstate) {
+            if (err) {
                 callback(err);
             } else {
-                callback(null,realEstate);
+                callback(null, realEstate);
             }
         })
     },
@@ -47,9 +47,18 @@ module.exports = {
                     console.log(err)
                     callback(err);
                 } else {
-                    //console.log(estates);
                     callback(query, estates);
                 }
             });
+    },
+    delete: function (id, callback) {
+        RealEstate.remove(req.params.id, function (err, res) {
+            if (err) {
+                console.log('Estate cannot be removed: ' + err);
+                callback(err);
+            } else {
+                callback(res);
+            }
+        })
     }
 };

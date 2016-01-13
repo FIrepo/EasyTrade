@@ -8,7 +8,7 @@ let CONTROLLER_NAME = 'realEstates',
         'Shop', 'Garage', 'Hotel'],
     dealTypes = ['Rent', 'Sold'];
 
-module.exports = function () {
+module.exports = function (app) {
     return {
         getCreateForm: function (req, res, next) {
             res.render(CONTROLLER_NAME + '/create', {estates: realEstateTypes, deals: dealTypes});
@@ -41,7 +41,6 @@ module.exports = function () {
                 }
             });
         },
-
         getSearch: function (req, res, next) {
             let query = {},
                 pagination = {},
@@ -80,9 +79,6 @@ module.exports = function () {
             }
 
             data.count(query, function (err, estatesCount) {
-                console.log('..IN SEARCH COUNT...');
-                console.log(err)
-                console.log('after error')
                 if (err) {
                     req.session.error = 'Cars cannot be obtained!: ' + err;
                     res.redirect('/');
@@ -109,6 +105,9 @@ module.exports = function () {
                 res.redirect('/real-estates');
                 res.end();
             })
+        },
+        deleteEstate: function(){
+
         }
     };
 };
