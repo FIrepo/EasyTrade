@@ -2,9 +2,10 @@ extends shared/layout
 block main-content
     .jumbotron
         h1.text-center Welcome to EasyTrade
+        h3 Whether you want to buy a nice car or a new home or you want to make someone happy by selling yours, you have come to the right place. Here you can easily do by just visiting one of our main sections. And what is better, our service is completely free.
     .container.row
         .col-md-6
-            h1.text-center Cars
+            a.btn.btn-default.btn-lg.col-md-12(href="/cars") CARS
             table.table.table-striped.table-hover
                 thead
                     th.col-md-5 Image
@@ -23,7 +24,7 @@ block main-content
                             td
                                 a.btn.btn-primary(href="/cars/details/" + car._id.toString()) Details
         .col-md-6
-            h1.text-center Real Estates
+            a.btn.btn-default.btn-lg.col-md-12(href="/real-estates") REAL ESTATES
             table.table.table-striped.table-hover
                 thead
                     th.col-md-5 Image
