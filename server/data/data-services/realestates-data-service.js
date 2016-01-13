@@ -7,9 +7,9 @@ module.exports = {
     create: function (realEstate, callback) {
         RealEstate.create(realEstate, callback);
     },
-    findById: function (id, callback) {
-        RealEstate.findById(id, function (err, realEstate) {
-            if (err) {
+    findById: function(id,callback){
+        RealEstate.findById(id, function(err, realEstate){
+            if(err){
                 callback(err);
             } else {
                 callback(null, realEstate);

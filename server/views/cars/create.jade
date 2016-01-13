@@ -1,0 +1,69 @@
+extends ../shared/layout
+block main-content
+    form.form-horizontal(method="post" action="/cars/create")
+        fieldset
+            .form-group
+                label.control-label.col-md-2(for="make") Make*
+                .col-md-4
+                    select.form-control(id="make" required="required"  name="make")
+                        each make in carMakes
+                            option(value=make) #{make}
+                label.control-label.col-md-2(for="model") Model*
+                .col-md-4
+                    input.form-control(id="model" type="text" required="required" name="model" placeholder="Model")
+            .form-group
+                label.control-label.col-md-2(for="transmission") Transmission*
+                .col-md-4
+                    select.form-control(id="transmission" required="required" name="transmission")
+                        option(value="automatic") Automatic
+                        option(value="manual") Manual
+                label.control-label.col-md-2(for="fuel") Fuel*
+                .col-md-4
+                    select.form-control(id="fuel" required="required" name="fuel")
+                        option(value="petrol") Petrol
+                        option(value="diesel") Diesel
+                        option(value="hybrid") Hybrid
+                        option(value="electric") Electric
+                        option(value="lpg") LPG
+                        option(value="cng") CNG
+            .form-group
+                label.control-label.col-md-2(for="yearOfProduction") Year of Production*
+                .col-md-4
+                    input.form-control(id="yearOfProduction" min='1900' max='2100' type="number" name="yearOfProduction" required="required" placeholder="Year of production")
+
+                label.control-label.col-md-2(for="mileage") Mileage in Km*
+                .col-md-4
+                    input.form-control(id="mileage" type="number" min="0" name="mileage" required="required" placeholder="Car mileage in Km")
+            .form-group
+                label.control-label.col-md-2(for="price") Price in $*
+                .col-md-4
+                    input.form-control(id="price" min='0' type="number" name="price" required="required" placeholder="Price")
+
+                label.control-label.col-md-2(for="power") Horsepower
+                .col-md-4
+                    input.form-control(id="power" type="number" min="1" name="power" placeholder="Horsepower")
+            .form-group
+                label.control-label.col-md-2(for="location") Car location*
+                .col-md-4
+                    input.form-control(id="location" type="text" name="location" required="required" placeholder="Car location")
+                label.control-label.col-md-2(for="imagesUrl") Image(URL)
+                .col-md-4
+                    input.form-control(id="imagesUrl" type="url" name="imagesUrl" placeholder="Url to car image")
+            .form-group
+                label.control-label.col-md-2(for="description") Description
+                .col-md-10
+                    textarea.form-control(id="description" rows="3" name="description" placeholder="Description")
+            .form-group
+                label.control-label.col-md-2(for="phone") Contact phone
+                .col-md-4
+                    input.form-control(id="phone" type="text" name="phone" placeholder="Contact phone")
+                label.control-label.col-md-2(for="phone") Contact e-mail
+                .col-md-4
+                    input.form-control(id="email" type="email" name="email" placeholder="Contact e-mail")
+            br
+            .form-group
+                .col-md-offset-2.col-md-10
+                    button.btn.btn-lg.btn-default.col-md-6(type="submit") Create
+                    button.btn.btn-lg.btn-default.col-md-6(type="reset") Cancel
+    .alert.alert-dismissable.col-md-10.col-md-offset-2
+        p.text-center Fields marked with * are required.

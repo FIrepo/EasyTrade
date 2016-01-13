@@ -99,15 +99,13 @@ module.exports = function (app) {
         },
         edit: function (req, res, next) {
             let realEstate = req.body;
-            realEstate.id = req.url.substr(req.url.lastIndexOf('/') + 1);
-
+            realEstate.id = req.url.substr(req.url.lastIndexOf('/')+1);
             data.update(realEstate, function (err, callback) {
                 res.redirect('/real-estates');
                 res.end();
             })
         },
         deleteEstate: function(){
-
         }
     };
 };

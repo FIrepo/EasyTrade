@@ -6,20 +6,22 @@ html
         base(href="/")
         link(rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap.min.css")
         link(rel="stylesheet" href="/libs/bootstrap/dist/css/bootstrap-theme.min.css")
+        link(rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.common.min.css")
+        link(rel="stylesheet" href="http://kendo.cdn.telerik.com/2015.3.1111/styles/kendo.default.min.css")
         link(rel="stylesheet" href="/css/site.css")
-    body(data-ng-app ng-controller="main-controller")
+    body(data-ng-app='myApp')
         nav.navbar.navbar-default
             .container-fluid
                 .navbar-header
                     button.navbar-toggle.collapsed(data-toggle="collapse" data-target="#menu")
-                        span.sr-only | Toggle navigation
+                        span.sr-only Toggle navigation
                         span.icon-bar
                         span.icon-bar
                         span.icon-bar
                     a.navbar-brand(href="/") EasyTrade
                 #menu.navbar-collapse.collapse
                     ul.nav.navbar-nav
-                        li.active
+                        li
                             a(href="/") Home
                         li.dropdown
                             a.dropdown-toggle(href="#" data-toggle="dropdown" role="button" aria-expanded="false") Categories
@@ -31,6 +33,9 @@ html
                                     a(href="/cars") Cars
                     ul.nav.navbar-nav.navbar-right
                         if (currentUser)
+                            if (currentUser.role === 'admin')
+                                li
+                                    a(href="/admin-panel") Admin panel
                             li
                                 a(href="/profile") #{currentUser.username}
                             li
@@ -43,7 +48,9 @@ html
 
         .container
             if (errorMessage)
-               .alert.alert-danger #{errorMessage}
+               .alert.alert-danger.text-center #{errorMessage}
+            if (infoMessage)
+                .alert.alert-success.text-center #{infoMessage}
 
             block main-content
 
