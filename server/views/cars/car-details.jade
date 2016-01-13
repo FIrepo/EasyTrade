@@ -33,5 +33,5 @@ block main-content
                             strong Description: #{car.description}
     .col-md-2
         if(canModerate)
-            a.btn.btn-lg.btn-primary(href='/cars/update/' + car._id) UPDATE
-            a.btn.btn-lg.btn-danger(href='/cars/delete/' + car._id) DELETE
+            a.btn.btn-lg.btn-primary.col-md-12(href='/cars/update/' + car._id) UPDATE
+            a.btn.btn-lg.btn-danger.col-md-12(style="margin-top:5%" href='/cars/delete/' + car._id) DELETE

@@ -13,19 +13,23 @@ module.exports = function (app, carsData, reData) {
                 // console.log(cars);
                 data.cars = cars;
                 // res.send(cars);
+                reData.getLast(10, function (err, re) {
+                    if (err) {
+                        req.session.error = 'Last real estates could not be obtained: ' + err.errmsg;
+                        res.redirect('/');
+                        return;
+                    }
+                    data.re = re;
+                    res.render('index', {cars: data.cars, re: data.re});
+
+                    //setTimeout(function(){
+                    //    res.render('index', {cars: data.cars, re: data.re});
+                    //}, 1000);
+                });
+
             });
 
-            reData.getLast(10, function (err, re) {
-                if (err) {
-                    req.session.error = 'Last real estates could not be obtained: ' + err.errmsg;
-                    res.redirect('/');
-                    return;
-                }
-                data.re = re;
-            });
-            setTimeout(function(){
-                res.render('index', {cars: data.cars, re: data.re});
-            }, 1000);
+
         }
     }
 };
