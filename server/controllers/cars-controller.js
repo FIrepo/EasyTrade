@@ -22,7 +22,7 @@ module.exports = function (app, carsData) {
 
             carsData.create(newCarData, function (err, car) {
                 if (err) {
-                    req.session.error = 'Failed to create new car advertisement: ' + err;
+                    req.session.error = 'Failed to create new car advertisement: ' + err.errmsg;
                     res.redirect('/cars/create');
                     return;
                 }
@@ -78,7 +78,7 @@ module.exports = function (app, carsData) {
 
             carsData.count(query, function (err, carsCount) {
                 if (err) {
-                    req.session.error = 'Cars cannot be obtained!: ' + err;
+                    req.session.error = 'Cars cannot be obtained!: ' + err.errmsg;
                     res.redirect('/');
                     return;
                 }
@@ -88,7 +88,7 @@ module.exports = function (app, carsData) {
 
                 carsData.all(query, pagination, function (err, cars) {
                     if (err) {
-                        req.session.error = 'Cars cannot be obtained!: ' + err;
+                        req.session.error = 'Cars cannot be obtained!: ' + err.errmsg;
                         res.redirect('/');
                         return;
                     }
@@ -111,7 +111,7 @@ module.exports = function (app, carsData) {
                 canModerate = false;
             carsData.byId({_id: carId}, function (err, car) {
                 if (err) {
-                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
                     res.redirect('/cars/search');
                     return;
                 }
@@ -132,7 +132,7 @@ module.exports = function (app, carsData) {
             let carId = req.params.id;
             carsData.byId({_id: carId}, function (err, car) {
                 if (err) {
-                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
                     res.redirect('/cars/search');
                     return;
                 }
@@ -151,7 +151,7 @@ module.exports = function (app, carsData) {
             let carId = req.params.id;
             carsData.byId({_id: carId}, function (err, car) {
                 if (err) {
-                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
                     res.redirect('/cars/search');
                     return;
                 }
@@ -161,7 +161,7 @@ module.exports = function (app, carsData) {
 
                     carsData.update(req.params.id, req.body, function (err) {
                         if (err) {
-                            req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                            req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
                             res.redirect('/cars/search');
                             return;
                         }
@@ -179,7 +179,7 @@ module.exports = function (app, carsData) {
             carsData.byId(req.params.id, function (err, carToDelete) {
 
                 if (err || !carToDelete) {
-                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
                     res.redirect('/cars/search');
                     return;
                 }

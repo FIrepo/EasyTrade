@@ -6,7 +6,7 @@ module.exports = function (app, carsData, reData) {
             let data = {};
             carsData.getLast(10, function (err, cars) {
                 if (err) {
-                    req.session.error = 'Last cars could not be obtained: ' + err;
+                    req.session.error = 'Last cars could not be obtained: ' + err.errmsg;
                     res.redirect('/');
                     return;
                 }
@@ -17,7 +17,7 @@ module.exports = function (app, carsData, reData) {
 
             reData.getLast(10, function (err, re) {
                 if (err) {
-                    req.session.error = 'Last real estates could not be obtained: ' + err;
+                    req.session.error = 'Last real estates could not be obtained: ' + err.errmsg;
                     res.redirect('/');
                     return;
                 }
