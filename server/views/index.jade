@@ -33,11 +33,11 @@ block main-content
                     each e in re
                         tr
                             td
-                                img.img-responsive(src=e.imagesUrl alt="car image")
+                                img.img-responsive(src=e.imagesUrl alt="real estate image")
                             td
                                 h3 #{e.type + ' ' + e.quadrature + ' sq.m.'}
                                 strong Price: #{e.price}
                                 br
                                 strong Year: #{e.dealType}
                             td
-                                a.btn.btn-primary(href="/cars/details/" + e._id.toString()) Details
+                                a.btn.btn-primary(href="/real-estates/" + e._id.toString()) Details
