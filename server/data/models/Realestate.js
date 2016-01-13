@@ -34,6 +34,8 @@ module.exports.init = function () {
             required: true,
             default: new Date()
         },
+        image: { type: String },
+        test: String,
         moreInformation: String
     });
 

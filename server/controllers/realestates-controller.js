@@ -15,6 +15,8 @@ module.exports = function (app) {
         },
         create: function (req, res, next) {
             let newRealEstate = req.body;
+            console.log('...IN CREATE CONTROLLER...')
+            console.log(newRealEstate);
             data.create(newRealEstate, function (err, data) {
                 if (err) {
                     res.redirect('/');

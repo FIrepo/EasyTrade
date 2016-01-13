@@ -3,9 +3,21 @@
 let auth = require('./auth'),
     controllers = require('../controllers'),
     services = require('../data/data-services'),
-    http = require('http');
+    http = require('http'),
+    multer = require('multer');
 
-module.exports = function(app) {
+let storage = multer.diskStorage({
+    destination: 'public/images',
+    filename: function (req, file, cb) {
+        var date = Date.now();
+        req.body.image = file.originalname + date;
+        cb(null, file.originalname + date)
+    }
+});
+
+var upload = multer({storage: storage});
+
+module.exports = function (app) {
     app.get('/api/all-users', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
     app.get('/register', controllers['users-controller'](app, services['users-data-service']).getRegister);
     app.post('/register', controllers['users-controller'](app, services['users-data-service']).postRegister);
@@ -13,20 +25,22 @@ module.exports = function(app) {
     app.post('/login', auth.login);
     app.get('/logout', auth.isAuthenticated, auth.logout);
     app.get('/all-users', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
-    app.get('/profile', auth.isAuthenticated, function(req, res){
+    app.get('/profile', auth.isAuthenticated, function (req, res) {
         res.render('users/profile');
     });
     app.post('/profile', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).updateUser);
     app.get('/profile/:username', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
     app.post('/profile/:username', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).updateUser);
     app.get('/profile/delete/:id', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).deleteUser);
-    app.get('/admin-panel', auth.isAuthenticated, function(req, res){
+    app.get('/admin-panel', auth.isAuthenticated, function (req, res) {
         res.render('users/admin-panel');
     });
 
     app.get('/real-estates/search', controllers['realestates-controller']().getSearch);
     app.get('/real-estates/create', controllers['realestates-controller']().getCreateForm);
-    app.post('/real-estates/create', controllers['realestates-controller']().create);
+
+    app.post('/real-estates/create', upload.single('image'), controllers['realestates-controller']().create);
+
     app.get('/real-estates', controllers['realestates-controller']().getSearch);
     app.get('/real-estates/:id', controllers['realestates-controller']().getRealEstate);
     app.get('/real-estates/:id/edit', controllers['realestates-controller']().getEditView);
@@ -42,13 +56,13 @@ module.exports = function(app) {
     app.get('/cars/delete/:id', controllers['cars-controller'](app, services['cars-data-service']).deleteCar);
     app.get('/cars/details/:id', controllers['cars-controller'](app, services['cars-data-service']).getCar);
 
-    app.get('/', function(req, res) {
+    app.get('/', function (req, res) {
         res.render('index');
     });
 
     app.get('/', controllers['home-controller'](app, services['cars-data-service'], services['realestates-data-service']).getLast);
 
-    app.get('*', function(req, res) {
+    app.get('*', function (req, res) {
         res.redirect('/');
     });
 };

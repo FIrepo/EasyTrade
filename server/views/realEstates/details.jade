@@ -3,6 +3,11 @@ block main-content
     h1.text-center= estate.type
     .panel.panel-warning
         .panel-heading
+            h3.panel-title Image
+        .panel-body
+            img(src="images/#{estate.image}")
+    .panel.panel-warning
+        .panel-heading
             h3.panel-title Address
         .panel-body
             div=estate.city

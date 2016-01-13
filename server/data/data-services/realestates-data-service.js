@@ -5,6 +5,7 @@ let RealEstate = mongoose.model('RealEstate');
 
 module.exports = {
     create: function (realEstate, callback) {
+        console.log(realEstate);
         RealEstate.create(realEstate, callback);
     },
     findById: function (id, callback) {
@@ -63,9 +64,9 @@ module.exports = {
     },
     getLast: function (number, callback) {
 
-        RealEstate.find()
+        RealEstate.find({})
             .sort({dateOfCreation: -1})
             .limit(number)
-            .exec(callback);
+            .exec(callback());
     }
 };
