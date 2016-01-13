@@ -39,7 +39,10 @@ module.exports.init = function () {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         },
-        moreInformation: String
+        moreInformation:{
+            type: String,
+            required: true
+        }
     });
 
     var RealEstate = mongoose.model('RealEstate', realEstateSchema);
