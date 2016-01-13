@@ -22,7 +22,7 @@ module.exports = function (app, carsData) {
 
             carsData.create(newCarData, function (err, car) {
                 if (err) {
-                    req.session.error = 'Failed to create new car advertisement: ' + err.errmsg;
+                    req.session.error = 'Failed to create new car advertisement: ' + err;
                     res.redirect('/cars/create');
                     return;
                 }

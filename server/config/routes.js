@@ -10,8 +10,8 @@ let storage = multer.diskStorage({
     destination: 'public/images',
     filename: function (req, file, cb) {
         var date = Date.now();
-        req.body.image = file.originalname + date;
-        cb(null, file.originalname + date)
+        req.body.image = date + file.originalname;
+        cb(null, date + file.originalname);
     }
 });
 
@@ -47,9 +47,9 @@ module.exports = function (app) {
 
     app.get('/cars', controllers.cars(app, services.cars).getMainView);
     app.get('/cars/create', auth.isAuthenticated, controllers.cars(app, services.cars).getCreate);
-    app.post('/cars/create', auth.isAuthenticated, controllers.cars(app, services.cars).postCreate);
+    app.post('/cars/create', upload.single('image'), auth.isAuthenticated, controllers.cars(app, services.cars).postCreate);
     app.get('/cars/update/:id', auth.isAuthenticated, controllers.cars(app, services.cars).getUpdate);
-    app.post('/cars/update/:id', auth.isAuthenticated, controllers.cars(app, services.cars).postUpdate);
+    app.post('/cars/update/:id', upload.single('image'), auth.isAuthenticated, controllers.cars(app, services.cars).postUpdate);
     app.get('/cars/all', controllers.cars(app, services.cars).getAllCars);
     app.get('/cars/search', controllers.cars(app, services.cars).getSearch);
     app.get('/cars/delete/:id', controllers.cars(app, services.cars).deleteCar);

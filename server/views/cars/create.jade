@@ -1,6 +1,6 @@
 extends ../shared/layout
 block main-content
-    form.form-horizontal(method="post" action="/cars/create")
+    form.form-horizontal(method="post" action="/cars/create" enctype="multipart/form-data")
         fieldset
             .form-group
                 label.control-label.col-md-2(for="make") Make*
@@ -46,9 +46,9 @@ block main-content
                 label.control-label.col-md-2(for="location") Car location*
                 .col-md-4
                     input.form-control(id="location" type="text" name="location" required="required" placeholder="Car location")
-                label.control-label.col-md-2(for="imagesUrl") Image(URL)
+                label.control-label.col-md-2(for="image") Image(URL)
                 .col-md-4
-                    input.form-control(id="imagesUrl" type="text" name="imagesUrl" placeholder="Url to car image")
+                    input.form-control(id="image" type="file" name="image" placeholder="Car image")
             .form-group
                 label.control-label.col-md-2(for="description") Description
                 .col-md-10

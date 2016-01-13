@@ -6,8 +6,8 @@ block main-content
                     h3.panel-title
                 .panel-body
                     .container.col-md-6
-                        if(car.imagesUrl)
-                            img.img-responsive(src=car.imagesUrl alt="car image")
+                        if(car.image)
+                            img.img-responsive(src='/images/#{car.image}' alt="car image")
                         else
                             img.img-responsive(src="/images/car.jpg" alt="car image")
                     .container.col-md-6

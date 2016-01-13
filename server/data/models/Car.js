@@ -69,7 +69,7 @@ module.exports.init = function () {
             type: String,
             validate: validateString('Description')
         },
-        imagesUrl: {
+        image: {
             type: String
         },
         creator: {
