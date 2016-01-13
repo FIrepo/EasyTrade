@@ -9,7 +9,7 @@ let fs = require('fs'),
     fs.readdirSync(__dirname)
         .filter(file => file.indexOf('service') >= 0)
         .forEach(file => {
-            let serviceName = file.substring(0, file.lastIndexOf('.'));
+            let serviceName = file.substring(0, file.indexOf('-'));
             services[`${serviceName}`] = require(path.join(__dirname, file));
         });
 }());

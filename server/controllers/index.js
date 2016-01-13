@@ -9,7 +9,7 @@ let fs = require('fs'),
     fs.readdirSync(__dirname)
         .filter(file => file.indexOf('controller') >= 0)
         .forEach(file => {
-            let controllerName = file.substring(0, file.lastIndexOf('.'));
+            let controllerName = file.substring(0, file.indexOf('-'));
             controllers[`${controllerName}`] = require(path.join(__dirname, file));
         });
 }());
