@@ -11,35 +11,62 @@ let CONTROLLER_NAME = 'realEstates',
 module.exports = function (app) {
     return {
         getCreateForm: function (req, res, next) {
-            res.render(CONTROLLER_NAME + '/create', {estates: realEstateTypes, deals: dealTypes});
+            if (app.locals.currentUser == undefined) {
+                res.redirect('/real-estates');
+            } else {
+                res.render(CONTROLLER_NAME + '/create', {estates: realEstateTypes, deals: dealTypes});
+            }
         },
         create: function (req, res, next) {
             let newRealEstate = req.body;
-            console.log('...IN CREATE CONTROLLER...')
-            console.log(newRealEstate);
+            newRealEstate.creator = app.locals.currentUser._id;
+
             data.create(newRealEstate, function (err, data) {
                 if (err) {
-                    res.redirect('/');
+                    req.session.error = 'Failed to create new real estate advertisement: ' + err.errmsg;
+                    res.redirect('/real-estates/create');
                     return
                 }
+
+                req.session.info = `Created successfully.`;
                 res.redirect('/real-estates');
             });
         },
         getRealEstate: function (req, res, next) {
+            let estateModerate = false;
             data.findById(req.params.id, function (err, estate) {
                 if (err) {
-                    res.send(err);
+                    req.session.error = 'The real estate advertisement with the provided id cannot be obtained: ' + err.errmsg;
+                    res.redirect('/real-estates');
+                    return
+                }
+
+                if (estate) {
+                    if (app.locals.currentUser
+                        && ((app.locals.currentUser.role == 'admin') || (app.locals.currentUser._id.id == estate.creator.id))) {
+                        estateModerate = true;
+                    }
+
+                    res.render(CONTROLLER_NAME + '/details', {estate: estate, estateModerate: estateModerate});
                 } else {
-                    res.render(CONTROLLER_NAME + '/details', {estate: estate});
+                    req.session.error = 'The real estate advertisement with the provided id cannot be obtained: ' + err.errmsg;
+                    res.redirect('/real-estates');
                 }
             });
         },
         getEditView: function (req, res, next) {
             data.findById(req.params.id, function (err, estate) {
                 if (err) {
-                    res.send(err);
-                } else {
+                    req.session.error = 'The real estate advertisement with the provided id cannot be obtained: ' + err.errmsg;
+                    res.redirect('/real-estates');
+                }
+
+                if (app.locals.currentUser
+                    && ((app.locals.currentUser.role == 'admin') || (app.locals.currentUser._id.id == estate.creator.id))) {
                     res.render(CONTROLLER_NAME + '/edit', {estate: estate, estates: realEstateTypes, deals: dealTypes});
+                } else {
+                    req.session.error = 'The real estate advertisement with the provided id cannot be obtained: ' + err.errmsg;
+                    res.redirect('/real-estates');
                 }
             });
         },
@@ -49,7 +76,8 @@ module.exports = function (app) {
                 searchUrl = req.originalUrl,
                 lastIndexOfPage = searchUrl.lastIndexOf('&page'),
                 endIndex = lastIndexOfPage > -1 ? lastIndexOfPage : searchUrl.length,
-                searchPages;
+                searchPages,
+                estateModerate = false;
 
             searchUrl = searchUrl.substr(0, endIndex);
 
@@ -80,6 +108,10 @@ module.exports = function (app) {
                 query.price['$lt'] = req.query.to;
             }
 
+            if (app.locals.currentUser) {
+                estateModerate = true;
+            }
+
             data.count(query, function (err, estatesCount) {
                 if (err) {
                     req.session.error = 'Cars cannot be obtained!: ' + err;
@@ -94,20 +126,21 @@ module.exports = function (app) {
                     res.render(CONTROLLER_NAME + '/search', {
                         estates: estates,
                         estatesTypes: realEstateTypes,
-                        dealTypes: dealTypes
+                        dealTypes: dealTypes,
+                        estateModerate: estateModerate
                     });
                 })
             })
         },
         edit: function (req, res, next) {
             let realEstate = req.body;
-            realEstate.id = req.url.substr(req.url.lastIndexOf('/')+1);
+            realEstate.id = req.url.substr(req.url.lastIndexOf('/') + 1);
             data.update(realEstate, function (err, callback) {
                 res.redirect('/real-estates');
                 res.end();
             })
         },
-        deleteEstate: function(){
+        deleteEstate: function () {
         }
     };
 };

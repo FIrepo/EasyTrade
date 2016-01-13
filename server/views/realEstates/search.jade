@@ -36,8 +36,11 @@ block main-content
             br
             .form-group
                 .col-md-offset-2.col-md-10
-                    button.btn.btn-lg.btn-default.col-md-6(type="submit") Search
-                    a.btn.btn-lg.btn-default.col-md-6(href="/real-estates/create") Add
+                    if(estateModerate)
+                        button.btn.btn-lg.btn-default.col-md-6(type="submit") Search
+                        a.btn.btn-lg.btn-default.col-md-6(href="/real-estates/create") Add
+                    else
+                        button.btn.btn-lg.btn-default.col-md-10(type="submit") Search
         if(estates.length==0)
             h1 No Results
         else
