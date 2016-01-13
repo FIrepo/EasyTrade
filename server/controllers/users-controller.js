@@ -10,6 +10,7 @@ module.exports = function (app, usersData) {
         },
         postRegister: function (req, res) {
             let newUserData = req.body;
+            if(newUserData)
 
             if (newUserData.password !== newUserData.confirmPassword) {
                 req.session.error = 'Passwords do not match!';

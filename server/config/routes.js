@@ -55,10 +55,6 @@ module.exports = function (app) {
     app.get('/cars/delete/:id', controllers['cars-controller'](app, services['cars-data-service']).deleteCar);
     app.get('/cars/details/:id', controllers['cars-controller'](app, services['cars-data-service']).getCar);
 
-    app.get('/', function (req, res) {
-        res.render('index');
-    });
-
     app.get('/', controllers['home-controller'](app, services['cars-data-service'], services['realestates-data-service']).getLast);
 
     app.get('*', function (req, res) {

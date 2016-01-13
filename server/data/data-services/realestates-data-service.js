@@ -29,7 +29,6 @@ module.exports = {
         query = query || {};
         RealEstate.count(query, function (err, estatesCount) {
             if (err) {
-                console.log(err)
                 callback(err);
             } else {
                 callback(null, estatesCount);
@@ -66,6 +65,6 @@ module.exports = {
         RealEstate.find({})
             .sort({dateOfCreation: -1})
             .limit(number)
-            .exec(callback());
+            .exec(callback);
     }
 };

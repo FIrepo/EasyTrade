@@ -11,21 +11,25 @@ block main-content
                     th.col-md-5 Image
                     th.col-md-5 Info
                     th.col-md-2 Details
-                //tbody
-                //    each car in cars
-                //        tr
-                //            td
-                //                if(car.imagesUrl)
-                //                    img.img-responsive(src=car.imagesUrl alt="car image")
-                //                else
-                //                    img.img-responsive(src="/images/car.jpg" alt="car image")
-                //            td
-                //                h3 #{car.make + ' ' + car.model}
-                //                strong Price: #{car.price}
-                //                br
-                //                strong Year: #{car.yearOfProduction}
-                //            td
-                //                a.btn.btn-primary(href="/cars/details/" + car._id.toString()) Details
+                tbody
+                    each car in cars
+                        tr
+                            td
+                                if(car.imagesUrl)
+                                    img.img-responsive(src=car.imagesUrl alt="car image")
+                                else
+                                    img.img-responsive(src="/images/car.jpg" alt="car image")
+                            td
+                                h3 #{car.make + ' ' + car.model}
+                                strong Price: #{car.price}
+                                br
+                                strong Production year: #{car.yearOfProduction}
+                                br
+                                strong Engine type: #{car.fuel}
+                                br
+                                strong Transmission type: #{car.transmission}
+                            td
+                                a.btn.btn-primary(href="/cars/details/" + car._id.toString()) Details
         .col-md-6
             a.btn.btn-default.btn-lg.col-md-12(href="/real-estates") REAL ESTATES
             table.table.table-striped.table-hover
@@ -34,14 +38,18 @@ block main-content
                     th.col-md-5 Info
                     th.col-md-2 Details
                 tbody
-                    //each e in re
-                    //    tr
-                    //        td
-                    //            img.img-responsive(src=e.imagesUrl alt="real estate image")
-                    //        td
-                    //            h3 #{e.type + ' ' + e.quadrature + ' sq.m.'}
-                    //            strong Price: #{e.price}
-                    //            br
-                    //            strong Year: #{e.dealType}
-                    //        td
-                    //            a.btn.btn-primary(href="/real-estates/" + e._id.toString()) Details
+                    each e in re
+                        tr
+                            td
+                                img.img-responsive(src=e.imagesUrl alt="real estate image")
+                            td
+                                h3 #{e.type}
+                                strong Quadrature: #{e.quadrature} sq.m.
+                                br
+                                strong Price: #{e.price}
+                                br
+                                strong Deal type: #{e.dealType}
+                                br
+                                strong City: #{e.city}
+                            td
+                                a.btn.btn-primary(href="/real-estates/" + e._id.toString()) Details
