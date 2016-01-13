@@ -2,7 +2,8 @@
 
 let auth = require('./auth'),
     controllers = require('../controllers'),
-    services = require('../data/data-services');
+    services = require('../data/data-services'),
+    http = require('http');
 
 module.exports = function(app) {
     app.get('/api/all-users', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
@@ -34,6 +35,8 @@ module.exports = function(app) {
     app.get('/cars', controllers['cars-controller'](app, services['cars-data-service']).getMainView);
     app.get('/cars/create', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).getCreate);
     app.post('/cars/create', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).postCreate);
+    app.get('/cars/update/:id', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).getUpdate);
+    app.post('/cars/update/:id', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).postUpdate);
     app.get('/cars/all', controllers['cars-controller'](app, services['cars-data-service']).getAllCars);
     app.get('/cars/search', controllers['cars-controller'](app, services['cars-data-service']).getSearch);
     app.get('/cars/delete/:id', controllers['cars-controller'](app, services['cars-data-service']).deleteCar);
@@ -42,6 +45,8 @@ module.exports = function(app) {
     app.get('/', function(req, res) {
         res.render('index');
     });
+
+    app.get('/', controllers['home-controller'](app, services['cars-data-service'], services['realestates-data-service']).getLast);
 
     app.get('*', function(req, res) {
         res.redirect('/');

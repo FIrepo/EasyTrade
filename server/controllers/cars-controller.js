@@ -17,15 +17,16 @@ module.exports = function (app, carsData) {
             newCarData.creator = app.locals.currentUser._id;
             newCarData.dateOfCreation = Date.now();
             newCarData.email = newCarData.email || app.locals.currentUser.email;
-            newCarData.imagesUrl = newCarData.imagesUrl || '/images/car.jpg';
+
             // TODO: Validation
 
             carsData.create(newCarData, function (err, car) {
                 if (err) {
-                    req.session.error = 'Failed to create new car advertisement: ' + err;
+                    req.session.error = 'Failed to create new car advertisement: ' + err.errmsg;
                     res.redirect('/cars/create');
                     return;
                 }
+                req.session.info = `${car.make} ${car.model} created successfully.`;
                 res.redirect('/cars/details/' + car._id);
             });
         },
@@ -34,7 +35,7 @@ module.exports = function (app, carsData) {
         },
         getAllCars: function (req, res) {
             let query = {},
-                pagination = {},
+                pagination = {sort: '-price'},
                 searchUrl = req.originalUrl,
                 lastIndexOfPage = searchUrl.lastIndexOf('&page'),
                 endIndex = lastIndexOfPage > -1 ? lastIndexOfPage : searchUrl.length,
@@ -64,14 +65,20 @@ module.exports = function (app, carsData) {
                 query.price = query.price || {};
                 query.price['$gt'] = req.query.from;
             }
+
             if (req.query.to) {
                 query.price = query.price || {};
                 query.price['$lt'] = req.query.to;
             }
 
+            if (req.query.sort) {
+                req.query.direction = req.query.direction || '';
+                pagination.sort = req.query.direction + req.query.sort;
+            }
+
             carsData.count(query, function (err, carsCount) {
                 if (err) {
-                    req.session.error = 'Cars cannot be obtained!: ' + err;
+                    req.session.error = 'Cars cannot be obtained!: ' + err.errmsg;
                     res.redirect('/');
                     return;
                 }
@@ -81,7 +88,7 @@ module.exports = function (app, carsData) {
 
                 carsData.all(query, pagination, function (err, cars) {
                     if (err) {
-                        req.session.error = 'Cars cannot be obtained!: ' + err;
+                        req.session.error = 'Cars cannot be obtained!: ' + err.errmsg;
                         res.redirect('/');
                         return;
                     }
@@ -90,7 +97,11 @@ module.exports = function (app, carsData) {
                         cars: cars,
                         searchUrl: searchUrl,
                         searchPages: searchPages,
-                        carsCount: carsCount
+                        carsCount: carsCount,
+                        sort: {
+                            orderBy: req.query.sort,
+                            direction: req.query.direction ?  'descending' : 'ascending'
+                        }
                     });
                 })
             });
@@ -100,7 +111,7 @@ module.exports = function (app, carsData) {
                 canModerate = false;
             carsData.byId({_id: carId}, function (err, car) {
                 if (err) {
-                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
                     res.redirect('/cars/search');
                     return;
                 }
@@ -117,23 +128,58 @@ module.exports = function (app, carsData) {
                 }
             });
         },
-        updateCar: function (req, res) {
-            if (app.locals.currentUser
-                && ((app.locals.currentUser.role == 'admin') || (app.locals.currentUser._id === req.body.creator._id))) {
-                carsData.update(req.body._id, req.body, function (updatedCar) {
-                    res.render(CONTROLLER_NAME + '/car-details', {car: updatedCar});
-                })
-            }
-            else {
-                req.session.error = 'You do not have sufficient rights to update the car advertisement with the provided id: ' + err;
-                res.redirect('/cars/search');
-            }
+        getUpdate: function (req, res) {
+            let carId = req.params.id;
+            carsData.byId({_id: carId}, function (err, car) {
+                if (err) {
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
+                    res.redirect('/cars/search');
+                    return;
+                }
+                if (app.locals.currentUser
+                    && ((app.locals.currentUser.role == 'admin')
+                    || (app.locals.currentUser._id.id === car.creator.id))) {
+                    res.render(CONTROLLER_NAME + '/update', {car: car, carMakes: carMakes});
+                }
+                else {
+                    req.session.error = 'You do not have sufficient rights to update the specified car advertisement.';
+                    res.redirect('/cars/search');
+                }
+            });
+        },
+        postUpdate: function (req, res) {
+            let carId = req.params.id;
+            carsData.byId({_id: carId}, function (err, car) {
+                if (err) {
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
+                    res.redirect('/cars/search');
+                    return;
+                }
+                if (app.locals.currentUser
+                    && ((app.locals.currentUser.role == 'admin')
+                    || (app.locals.currentUser._id.id === car.creator.id))) {
+
+                    carsData.update(req.params.id, req.body, function (err) {
+                        if (err) {
+                            req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
+                            res.redirect('/cars/search');
+                            return;
+                        }
+                        req.session.info = `${car.make} ${car.model} updated successfully.`;
+                        res.redirect('/cars/details/' + req.params.id);
+                    })
+                }
+                else {
+                    req.session.error = 'You do not have sufficient rights to update the specified car advertisement.';
+                    res.redirect('/cars/search');
+                }
+            });
         },
         deleteCar: function (req, res) {
             carsData.byId(req.params.id, function (err, carToDelete) {
 
                 if (err || !carToDelete) {
-                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err;
+                    req.session.error = 'The car advertisement with the provided id cannot be obtained: ' + err.errmsg;
                     res.redirect('/cars/search');
                     return;
                 }
@@ -148,7 +194,6 @@ module.exports = function (app, carsData) {
                     req.session.error = 'You do not have sufficient rights to delete the car advertisement with the provided id.';
                     res.redirect('/cars/details/' + req.params.id);
                 }
-
             });
         }
     };

@@ -9,7 +9,7 @@ module.exports = {
     all: function (query, pagination, callback) {
         query = query || {};
         Car.find(query)
-            //.sort(sort)
+            .sort(pagination.sort)
             .skip(pagination.itemsPerPage * (pagination.page - 1))
             .limit(pagination.itemsPerPage)
             .exec(function (err, cars) {
@@ -20,15 +20,22 @@ module.exports = {
                 }
             });
     },
+    getLast: function(number, callback){
+
+        Car.find()
+            .sort({dateOfCreation: -1})
+        .limit(number)
+        .exec(callback);
+    },
     count: function (query, callback) {
         query = query || {};
         Car.count(query, function (err, carsCount) {
-                if (err) {
-                    callback(err);
-                } else {
-                    callback(null, carsCount);
-                }
-            });
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, carsCount);
+            }
+        });
     },
     byId: function (carId, callback) {
         Car.findOne({_id: carId}, function (err, car) {
@@ -40,8 +47,13 @@ module.exports = {
         })
     },
     update: function (carId, newProps, callback) {
-        this.all({_id: carId}, function (cars) {
-            callback(cars[0].update(newProps));
+        let updateProps = {$set: newProps};
+        Car.findOneAndUpdate({_id: carId}, updateProps, function (err, car) {
+            if (err) {
+                callback(err);
+            } else {
+                callback(null, car);
+            }
         })
     },
     delete: function (carId, callback) {

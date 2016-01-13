@@ -6,7 +6,10 @@ block main-content
                     h3.panel-title
                 .panel-body
                     .container.col-md-6
-                        img.img-responsive(src=car.imagesUrl alt="car image")
+                        if(car.imagesUrl)
+                            img.img-responsive(src=car.imagesUrl alt="car image")
+                        else
+                            img.img-responsive(src="/images/car.jpg" alt="car image")
                     .container.col-md-6
                         h2 #{car.make} #{car.model}
                         p
@@ -16,6 +19,8 @@ block main-content
                         p
                             strong Mileage: #{car.mileage}
                         p
+                            strong Horsepower: #{car.power}
+                        p
                             strong Transmission: #{car.transmission}
                         p
                             strong Fuel: #{car.fuel}
@@ -24,8 +29,9 @@ block main-content
                         if(car.phone)
                             p
                                 strong Contact phone: #{car.phone}
-                        p
+                        p(style="word-wrap:break-word")
                             strong Description: #{car.description}
     .col-md-2
         if(canModerate)
-            a.btn.btn-lg.btn-danger(href='/cars/delete/' + car._id) Delete
+            a.btn.btn-lg.btn-primary(href='/cars/update/' + car._id) UPDATE
+            a.btn.btn-lg.btn-danger(href='/cars/delete/' + car._id) DELETE

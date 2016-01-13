@@ -29,6 +29,11 @@ module.exports.init = function () {
             type: String,
             required: true
         },
+        dateOfCreation: {
+            type: Date,
+            required: true,
+            default: new Date()
+        },
         moreInformation: String
     });
 

@@ -22,7 +22,7 @@ module.exports = function (app, usersData) {
                 newUserData.hashPass = encryption.generateHashedPassword(newUserData.salt, newUserData.password);
                 usersData.create(newUserData, function (err, user) {
                     if (err) {
-                        req.session.error = 'Failed to register new user: ' + err;
+                        req.session.error = 'Failed to register new user.' + err.errmsg;
                         res.redirect('/register');
                         return;
                     }
@@ -33,6 +33,7 @@ module.exports = function (app, usersData) {
                             return res.send({reason: err.toString()});
                         }
                         else {
+                            req.session.info = `${user.username} registered and logged in successfully.`;
                             res.redirect('/');
                         }
                     })
@@ -47,15 +48,15 @@ module.exports = function (app, usersData) {
                 params = req.params,
                 api = req.url.indexOf('api') !== -1;
             if (app.locals.currentUser && app.locals.currentUser.role === 'admin') {
-                usersData.all(params, function(err, responseModelUsers) {
-                    if(view === 'single'){
-                        if(api){
+                usersData.all(params, function (err, responseModelUsers) {
+                    if (view === 'single') {
+                        if (api) {
                             res.send(responseModelUsers[0]);
                         } else {
                             res.render('users/other-user-profile', {profileUser: responseModelUsers[0]});
                         }
                     } else {
-                        if(api){
+                        if (api) {
                             res.send(responseModelUsers);
                         } else {
                             res.render('users/all-users', {users: responseModelUsers});
@@ -82,12 +83,19 @@ module.exports = function (app, usersData) {
                     }
                 }
 
-                usersData.update(newUserData.username, req.body, function (updatedUser) {
+                usersData.update(newUserData.username, req.body, function (err, updatedUser) {
+                    if (err) {
+                        req.session.error = 'There was problem updating the user profile: ' + err.errmsg;
+                        res.redirect('/');
+                        return;
+                    }
+
                     app.locals.currentUser = updatedUser;
+                    req.session.info = `${updatedUser.username} updated successfully.`;
                     res.redirect('back');
                 })
             } else {
-                req.session.error = 'Not for you';
+                req.session.error = 'You do not have sufficient permissions to access this page!';
                 res.redirect('/');
             }
         },
@@ -100,10 +108,11 @@ module.exports = function (app, usersData) {
                 usersData.delete(username, function () {
                     req.method = 'GET';
                     req.logout();
+                    req.session.info = `${username} deleted successfully.`;
                     res.redirect('/');
                 });
             } else {
-                req.session.error = 'Not for you';
+                req.session.error = 'You do not have sufficient permissions to access this page!';
                 res.redirect('/');
             }
         }

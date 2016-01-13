@@ -2,7 +2,12 @@ extends ../shared/layout
 block main-content
     .panel.panel-default
         .panel-body.text-center
-            h3 #{carsCount} cars were found based on your search criteria.
+            h3 #[strong #{carsCount}] cars were found based on your search criteria.
+            h4 The results are sorted by #[strong #{sort.orderBy}] in #[strong #{sort.direction}] order.
+    .container.row
+        a.btn.btn-default.btn-lg.btn-block(href="/cars/search") New car search
+        if (currentUser)
+            a.btn.btn-default.btn-lg.btn-block(href="/cars/create") Create a car advertisement
     .row.text-center
         ul.pagination
             - var n = 1, m = 1;
@@ -15,11 +20,14 @@ block main-content
                 .panel-heading
                     h3.panel-title #{car.make + ' ' + car.model}
                 .panel-body
-                    .container.col-md-5
-                        a(href="/cars/details/" + car._id.toString())
-                            img.img-responsive(src=car.imagesUrl alt="car image")
-                    .container.col-md-7
-                        h3 #{car.make + ' ' + car.model}
-                            span.pull-right #{car.price} $
-                        p
-                            strong Production year: #{car.yearOfProduction}, Mileage: #{car.mileage} km, Fuel type: #{car.fuel}, Car location: #{car.location}
+                    a(href="/cars/details/" + car._id.toString())
+                        .container.col-md-5
+                            if(car.imagesUrl)
+                                img.img-responsive(src=car.imagesUrl alt="car image")
+                            else
+                                img.img-responsive(src="/images/car.jpg" alt="car image")
+                        .container.col-md-7
+                            h3 #{car.make + ' ' + car.model}
+                                span.pull-right #{car.price} $
+                            p
+                                strong Production year: #{car.yearOfProduction}, Horsepower: #{car.power}, Mileage: #{car.mileage} km, Fuel type: #{car.fuel}, Car location: #{car.location}

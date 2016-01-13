@@ -7,9 +7,9 @@ module.exports = {
     create: function (realEstate, callback) {
         RealEstate.create(realEstate, callback);
     },
-    findById: function(id,callback){
-        RealEstate.findById(id, function(err, realEstate){
-            if(err){
+    findById: function (id, callback) {
+        RealEstate.findById(id, function (err, realEstate) {
+            if (err) {
                 callback(err);
             } else {
                 callback(null, realEstate);
@@ -59,6 +59,13 @@ module.exports = {
             } else {
                 callback(res);
             }
-        })
+        });
+    },
+    getLast: function (number, callback) {
+
+        RealEstate.find()
+            .sort({dateOfCreation: -1})
+            .limit(number)
+            .exec(callback);
     }
 };
