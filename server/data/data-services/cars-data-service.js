@@ -11,7 +11,7 @@ module.exports = {
         Car.find(query)
             .sort(pagination.sort)
             .skip(pagination.itemsPerPage * (pagination.page - 1))
-            .limit(pagination.itemsPerfindPage)
+            .limit(pagination.itemsPerPage)
             .exec(function (err, cars) {
                 if (err) {
                     callback(err);

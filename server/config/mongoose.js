@@ -4,7 +4,7 @@ let mongoose = require('mongoose'),
     models = require('../data/models');
 
 module.exports = function(config) {
-    mongoose.connect(config.mongoLabDb);
+    mongoose.connect(config.db);
     let db = mongoose.connection;
 
     db.once('open', function(err) {
