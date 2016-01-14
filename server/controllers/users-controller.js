@@ -10,7 +10,7 @@ module.exports = function (app, usersData) {
         },
         postRegister: function (req, res) {
             let newUserData = req.body;
-            if(newUserData.role){
+            if (newUserData.role) {
                 newUserData.role = undefined;
             }
 
@@ -71,10 +71,10 @@ module.exports = function (app, usersData) {
                 res.redirect('/');
             }
         },
-        getProfile: function (req, res){
+        getProfile: function (req, res) {
             res.render('users/profile');
         },
-        getAdminPanel:function (req, res){
+        getAdminPanel: function (req, res) {
             res.render('users/admin-panel');
         },
         updateUser: function (req, res) {
@@ -116,7 +116,9 @@ module.exports = function (app, usersData) {
 
                 usersData.delete(username, function () {
                     req.method = 'GET';
-                    req.logout();
+                    if (app.locals.currentUser.role !== 'admin') {
+                        req.logout();
+                    }
                     req.session.info = `${username} deleted successfully.`;
                     res.redirect('/');
                 });

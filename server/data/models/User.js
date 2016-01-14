@@ -5,7 +5,7 @@ let mongoose = require('mongoose'),
     userRoles = ['user', 'admin'],
     forbiddenCharacters = [' ', '<', '>', '(', ')', ','];
 
-module.exports.init = function() {
+module.exports.init = function () {
     let userSchema = mongoose.Schema({
         username: {
             type: String,
@@ -18,7 +18,7 @@ module.exports.init = function() {
                 validator: function (val) {
                     'use strict';
                     let containsForbiddenChars = forbiddenCharacters.some(
-                        function(item){
+                        function (item) {
                             return val.includes(item);
                         }
                     );
@@ -30,12 +30,11 @@ module.exports.init = function() {
         },
         firstName: {
             type: String,
-            minlength: 2,
             validate: {
                 validator: function (val) {
                     'use strict';
                     let containsForbiddenChars = forbiddenCharacters.some(
-                        function(item){
+                        function (item) {
                             return val.includes(item);
                         }
                     );
@@ -47,12 +46,11 @@ module.exports.init = function() {
         },
         lastName: {
             type: String,
-            minlength: 2,
             validate: {
                 validator: function (val) {
                     'use strict';
                     let containsForbiddenChars = forbiddenCharacters.some(
-                        function(item){
+                        function (item) {
                             return val.includes(item);
                         }
                     );
@@ -62,9 +60,18 @@ module.exports.init = function() {
                 message: 'Username should not contain invalid characters!'
             }
         },
-        email: String, //TODO: Validate Email
-        salt: String,
-        hashPass: String,
+        email: {
+            type: String,
+            required: true
+        },
+        salt: {
+            type: String,
+            required: true
+        },
+        hashPass: {
+            type: String,
+            required: true
+        },
         age: {
             type: Number,
             min: 16,
@@ -73,10 +80,11 @@ module.exports.init = function() {
         role: {
             type: String,
             default: 'user',
+            required: true,
             validate: {
                 validator: function (val) {
                     'use strict';
-                    return userRoles.some(function(item){
+                    return userRoles.some(function (item) {
                         return (item === val);
                     });
                 },
@@ -86,16 +94,11 @@ module.exports.init = function() {
     });
 
     userSchema.methods = {
-        authenticate: function(password) {
-            if (encryption.generateHashedPassword(this.salt, password) === this.hashPass) {
-                return true;
-            }
-            else {
-                return false;
-            }
+        authenticate: function (password) {
+            return encryption.generateHashedPassword(this.salt, password) === this.hashPass;
         },
-        update: function(newProps){
-            for(let prop in newProps){
+        update: function (newProps) {
+            for (let prop in newProps) {
                 this[`${prop}`] = newProps[`${prop}`];
             }
 
@@ -103,7 +106,6 @@ module.exports.init = function() {
             return this;
         }
     };
-
 
     var User = mongoose.model('User', userSchema);
 };
