@@ -2,7 +2,7 @@ extends ../shared/layout
 block main-content
     form(method="post", action="/real-estates/delete/#{estate.id}")
         h1.text-center= estate.type
-        .container.col-md-12
+        .container.col-md-10
             .panel.panel-default
                 .panel-heading
                     h3.panel-title
@@ -27,7 +27,7 @@ block main-content
                         p
                             strong Mode Info: #{estate.moreInformation}
         .col-md-2
-        if(estateModerate)
-            a.btn.btn-lg.btn-primary.col-md-12(href='/real-estates/#{estate.id}/edit') Edit
-            br
-            button.btn.btn-lg.btn-danger.col-md-12(type='submit') Delete
+            if(estateModerate)
+                a.btn.btn-lg.btn-primary.col-md-12(href='/real-estates/#{estate.id}/edit') Edit
+                br
+                button.btn.btn-lg.btn-danger.col-md-12(style="margin-top:5%" type='submit') Delete
