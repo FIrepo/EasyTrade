@@ -14,20 +14,27 @@ block main-content
             while n <= searchPages
                 li
                     a(href=searchUrl + '&page=' + n++)= m++
-    each car in cars
-        .container.col-md-6
-            .panel.panel-default
-                .panel-heading
-                    h3.panel-title #{car.make + ' ' + car.model}
-                .panel-body
-                    a(href="/cars/details/" + car._id.toString())
-                        .container.col-md-5
-                            if(car.image)
+
+    table.table.table-striped.table-hover
+        thead
+            th.col-md-2.text-center
+            th.col-md-2.text-center Make
+            th.col-md-2.text-center Model
+            th.col-md-2.text-center Transmission
+            th.col-md-2.text-center Engine
+            th.col-md-2.text-center Price
+        tbody
+            each car in cars
+                tr.text-center.text-capitalize
+                    td.col-md-2
+                        if(car.image)
+                            a(href="/cars/details/#{car._id}")
                                 img.img-responsive(src='/images/#{car.image}' alt="car image")
-                            else
+                        else
+                            a(href="/cars/details/#{car._id}")
                                 img.img-responsive(src="/images/car.jpg" alt="car image")
-                        .container.col-md-7
-                            h3 #{car.make + ' ' + car.model}
-                                span.pull-right #{car.price} $
-                            p
-                                strong Production year: #{car.yearOfProduction}, Horsepower: #{car.power}, Mileage: #{car.mileage} km, Fuel type: #{car.fuel}, Car location: #{car.location}
+                    td.col-md-2=car.make
+                    td.col-md-2=car.model
+                    td.col-md-2=car.transmission
+                    td.col-md-2=car.fuel
+                    td.col-md-2=car.price

@@ -75,7 +75,13 @@ module.exports = function (app, usersData) {
             res.render('users/profile');
         },
         getAdminPanel: function (req, res) {
-            res.render('users/admin-panel');
+            if (app.locals.currentUser
+                && app.locals.currentUser.role === 'admin') {
+                res.render('users/admin-panel');
+            } else {
+                req.session.error = 'For admins only';
+                res.redirect('/login');
+            }
         },
         updateUser: function (req, res) {
             if (app.locals.currentUser
