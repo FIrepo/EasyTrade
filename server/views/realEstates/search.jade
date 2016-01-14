@@ -56,7 +56,10 @@ block main-content
                     each estate in estates
                         tr
                             td.col-md-2
-                                img.img-responsive(src="/images/#{estate.image}")
+                                if(estate.image)
+                                    img.img-responsive(src='/images/#{estate.image}' alt="estate image")
+                                else
+                                    img.img-responsive(src="/images/estate.jpg" alt="estate image")
                             td.col-md-2
                                 a(href="/real-estates/#{estate.id}")= estate.type
                             td.col-md-2=estate.city

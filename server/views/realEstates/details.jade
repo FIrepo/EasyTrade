@@ -9,7 +9,9 @@ block main-content
                 .panel-body
                     .container.col-md-6
                         if(estate.image)
-                            img.img-responsive(src="images/#{estate.image}" alt="estate image")
+                            img.img-responsive(src='/images/#{estate.image}' alt="estate image")
+                        else
+                            img.img-responsive(src="/images/estate.jpg" alt="estate image")
                     .container.col-md-6
                         h2 #{estate.type}
                         p
