@@ -3,21 +3,9 @@
 let auth = require('./auth'),
     controllers = require('../controllers'),
     services = require('../data/data-services'),
-    http = require('http'),
-    multer = require('multer');
+    http = require('http');
 
-let storage = multer.diskStorage({
-    destination: 'public/images',
-    filename: function (req, file, cb) {
-        var date = Date.now();
-        req.body.image = date + file.originalname;
-        cb(null, date + file.originalname);
-    }
-});
-
-var upload = multer({storage: storage});
-
-module.exports = function (app) {
+module.exports = function (app, upload) {
     app.get('/api/all-users', auth.isAuthenticated, controllers.users(app, services.users).getAllUsers);
     app.get('/register', controllers.users(app, services.users).getRegister);
     app.post('/register', controllers.users(app, services.users).postRegister);
