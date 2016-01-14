@@ -10,7 +10,9 @@ module.exports = function (app, usersData) {
         },
         postRegister: function (req, res) {
             let newUserData = req.body;
-            if(newUserData)
+            if(newUserData.role){
+                newUserData.role = undefined;
+            }
 
             if (newUserData.password !== newUserData.confirmPassword) {
                 req.session.error = 'Passwords do not match!';
@@ -68,6 +70,12 @@ module.exports = function (app, usersData) {
                 req.session.error = 'For admins only';
                 res.redirect('/');
             }
+        },
+        getProfile: function (req, res){
+            res.render('users/profile');
+        },
+        getAdminPanel:function (req, res){
+            res.render('users/admin-panel');
         },
         updateUser: function (req, res) {
             if (app.locals.currentUser

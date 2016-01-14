@@ -2,17 +2,23 @@ extends ../shared/layout
 
 block main-content
     form(method="post" action="/register")
-        label(for="username") Username
-        input(id="username" required class="form-control" type="text" name="username" placeholder="Username")
+        label(for="username") Username*
+        input(id="username" required="required" class="form-control" type="text" name="username" placeholder="Username")
         br
-        label(for='email') Email address
-        input#email.form-control(type='email' name='email' placeholder='Email')
+        label(for='fname') First name
+        input#fname.form-control(type='text' name='firstName' placeholder='First name')
         br
-        label(for="password") Password
-        input(id="password" class="form-control" type="password" name="password" placeholder="Password")
+        label(for='lname') Last name
+        input#lname.form-control(type='text' name='lastName' placeholder='Last name')
         br
-        label(for="confirm-password") Confirm Password
-        input(id="confirm-password" class="form-control" type="password" name="confirmPassword" placeholder="Confirm password")
+        label(for='email') Email address*
+        input#email.form-control(type='email' required="required" name='email' placeholder='Email')
+        br
+        label(for="password") Password*
+        input(id="password" class="form-control" required="required" type="password" name="password" placeholder="Password")
+        br
+        label(for="confirm-password") Confirm Password*
+        input(id="confirm-password" class="form-control" required="required" type="password" name="confirmPassword" placeholder="Confirm password")
         br
         label(for="age") Age
         input(id="age" class="form-control" min='16' max='155' type="number" name="age" placeholder="Age")

@@ -13,16 +13,12 @@ module.exports = function (app, upload) {
     app.post('/login', auth.login);
     app.get('/logout', auth.isAuthenticated, auth.logout);
     app.get('/all-users', auth.isAuthenticated, controllers.users(app, services.users).getAllUsers);
-    app.get('/profile', auth.isAuthenticated, function (req, res) {
-        res.render('users/profile');
-    });
+    app.get('/profile', controllers.users(app, services.users).getProfile);
     app.post('/profile', auth.isAuthenticated, controllers.users(app, services.users).updateUser);
     app.get('/profile/:username', auth.isAuthenticated, controllers.users(app, services.users).getAllUsers);
     app.post('/profile/:username', auth.isAuthenticated, controllers.users(app, services.users).updateUser);
     app.get('/profile/delete/:id', auth.isAuthenticated, controllers.users(app, services.users).deleteUser);
-    app.get('/admin-panel', auth.isAuthenticated, function (req, res) {
-        res.render('users/admin-panel');
-    });
+    app.get('/admin-panel', auth.isAuthenticated, controllers.users(app, services.users).getAdminPanel);
 
     app.get('/real-estates/search', controllers.realestates(app, services.realestates).getSearch);
     app.get('/real-estates/create', controllers.realestates(app, services.realestates).getCreateForm);

@@ -18,6 +18,13 @@ block main-content
             label(for='age') Age
             input(id='age' class='form-control' type='number' min=16 max=155 name="age" placeholder="Age" value=profileUser.age)
             br
+            label(for='role') Role
+            select.text-capitalize.form-control(id="role" required="required" name="role")
+                option(value=profileUser.role) #{profileUser.role}
+                option(disabled) ──────────
+                option(value="user") user
+                option(value="admin") admin
+            br
             input(type="submit" class="btn btn-lg btn-primary" value="UPDATE")
             // br
             input(id="username" class="hidden" type="text" name="username" value=profileUser.username)
