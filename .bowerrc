@@ -1,1 +1,7 @@
-{"directory":"public/libs"}
+{"directory":"public/libs",
+"json": "config/bower.json",
+  "storage": {
+    "packages": ".bower-cache",
+    "registry": ".bower-registry"
+  },
+  "tmp": ".bower-tmp"}
