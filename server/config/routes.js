@@ -42,6 +42,7 @@ module.exports = function (app, upload) {
     app.get('/', controllers.home(app, services.cars, services.realestates).getLast);
 
     app.get('*', function (req, res) {
+        req.session.error = 'Invalid page!';
         res.redirect('/');
     });
 };

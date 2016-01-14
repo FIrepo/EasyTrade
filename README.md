@@ -19,47 +19,43 @@ All ads provide detailed and thorough information and photos.
 
 ## Routes and functionality
 ```Javascript
-// USERS
-    app.get('/api/all-users', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
-    app.get('/register', controllers['users-controller'](app, services['users-data-service']).getRegister);
-    app.post('/register', controllers['users-controller'](app, services['users-data-service']).postRegister);
-    app.get('/login', controllers['users-controller'](app, services['users-data-service']).getLogin);
+	app.get('/api/all-users', auth.isAuthenticated, controllers.users(app, services.users).getAllUsers);
+    app.get('/register', controllers.users(app, services.users).getRegister);
+    app.post('/register', controllers.users(app, services.users).postRegister);
+    app.get('/login', controllers.users(app, services.users).getLogin);
     app.post('/login', auth.login);
     app.get('/logout', auth.isAuthenticated, auth.logout);
-    app.get('/all-users', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
-    app.get('/profile', auth.isAuthenticated, function (req, res) {
-        res.render('users/profile');
-    });
-    app.post('/profile', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).updateUser);
-    app.get('/profile/:username', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).getAllUsers);
-    app.post('/profile/:username', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).updateUser);
-    app.get('/profile/delete/:id', auth.isAuthenticated, controllers['users-controller'](app, services['users-data-service']).deleteUser);
-    app.get('/admin-panel', auth.isAuthenticated, function (req, res) {
-        res.render('users/admin-panel');
-    });
-// REAL ESTATES
-    app.get('/real-estates/search', controllers['realestates-controller'](app).getSearch);
-    app.get('/real-estates/create', controllers['realestates-controller'](app).getCreateForm);
-    app.post('/real-estates/create', upload.single('image'), controllers['realestates-controller'](app).create);
-    app.get('/real-estates', controllers['realestates-controller'](app).getSearch);
-    app.post('/real-estates/delete/:id', controllers['realestates-controller'](app).deleteEstate);
-    app.get('/real-estates/:id', controllers['realestates-controller'](app).getRealEstate);
-    app.get('/real-estates/:id/edit', controllers['realestates-controller'](app).getEditView);
-    app.post('/real-estates/:id', controllers['realestates-controller'](app).edit);
-// CARS
-    app.get('/cars', controllers['cars-controller'](app, services['cars-data-service']).getMainView);
-    app.get('/cars/create', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).getCreate);
-    app.post('/cars/create', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).postCreate);
-    app.get('/cars/update/:id', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).getUpdate);
-    app.post('/cars/update/:id', auth.isAuthenticated, controllers['cars-controller'](app, services['cars-data-service']).postUpdate);
-    app.get('/cars/all', controllers['cars-controller'](app, services['cars-data-service']).getAllCars);
-    app.get('/cars/search', controllers['cars-controller'](app, services['cars-data-service']).getSearch);
-    app.get('/cars/delete/:id', controllers['cars-controller'](app, services['cars-data-service']).deleteCar);
-    app.get('/cars/details/:id', controllers['cars-controller'](app, services['cars-data-service']).getCar);
-// HOME
-    app.get('/', controllers['home-controller'](app, services['cars-data-service'], services['realestates-data-service']).getLast);
+    app.get('/all-users', auth.isAuthenticated, controllers.users(app, services.users).getAllUsers);
+    app.get('/profile', controllers.users(app, services.users).getProfile);
+    app.post('/profile', auth.isAuthenticated, controllers.users(app, services.users).updateUser);
+    app.get('/profile/:username', auth.isAuthenticated, controllers.users(app, services.users).getAllUsers);
+    app.post('/profile/:username', auth.isAuthenticated, controllers.users(app, services.users).updateUser);
+    app.get('/profile/delete/:id', auth.isAuthenticated, controllers.users(app, services.users).deleteUser);
+    app.get('/admin-panel', auth.isAuthenticated, controllers.users(app, services.users).getAdminPanel);
+
+    app.get('/real-estates/search', controllers.realestates(app, services.realestates).getSearch);
+    app.get('/real-estates/create', controllers.realestates(app, services.realestates).getCreateForm);
+    app.post('/real-estates/create', upload.single('image'), controllers.realestates(app, services.realestates).create);
+    app.get('/real-estates', controllers.realestates(app, services.realestates).getSearch);
+    app.post('/real-estates/delete/:id', controllers.realestates(app, services.realestates).deleteEstate);
+    app.get('/real-estates/:id', controllers.realestates(app, services.realestates).getRealEstate);
+    app.get('/real-estates/:id/edit', controllers.realestates(app, services.realestates).getEditView);
+    app.post('/real-estates/:id', controllers.realestates(app, services.realestates).edit);
+
+    app.get('/cars', controllers.cars(app, services.cars).getMainView);
+    app.get('/cars/create', auth.isAuthenticated, controllers.cars(app, services.cars).getCreate);
+    app.post('/cars/create', upload.single('image'), auth.isAuthenticated, controllers.cars(app, services.cars).postCreate);
+    app.get('/cars/update/:id', auth.isAuthenticated, controllers.cars(app, services.cars).getUpdate);
+    app.post('/cars/update/:id', upload.single('image'), auth.isAuthenticated, controllers.cars(app, services.cars).postUpdate);
+    app.get('/cars/all', controllers.cars(app, services.cars).getAllCars);
+    app.get('/cars/search', controllers.cars(app, services.cars).getSearch);
+    app.get('/cars/delete/:id', controllers.cars(app, services.cars).deleteCar);
+    app.get('/cars/details/:id', controllers.cars(app, services.cars).getCar);
+
+    app.get('/', controllers.home(app, services.cars, services.realestates).getLast);
 
     app.get('*', function (req, res) {
+        req.session.error = 'Invalid page!';
         res.redirect('/');
     });
 ```
