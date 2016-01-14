@@ -1,4 +1,9 @@
 extends ../shared/layout
 block main-content
-    a#all-users-btn.btn.btn-primary.btn-lg(href='/all-users') ALL USERS
-
+    .panel.panel-default.text-center
+        h2 Admin panel
+        h3 From here you can manage the site contents
+    .container.row
+        a.btn.btn-default.btn-lg.btn-block(href="/all-users") Edit users
+        a.btn.btn-default.btn-lg.btn-block(href="/cars/all") Edit car advertisements
+        a.btn.btn-default.btn-lg.btn-block(href="/real-estates") Edit real estate advertisements
