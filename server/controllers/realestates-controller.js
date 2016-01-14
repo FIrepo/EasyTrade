@@ -20,8 +20,7 @@ module.exports = function (app, data) {
         create: function (req, res) {
             let newRealEstate = req.body;
             newRealEstate.creator = app.locals.currentUser._id;
-            //newRealEstate.image = newRealEstate.image || 'estate.jpg';
-            data.create(newRealEstate, function (err, data) {
+            data.create(newRealEstate, function (err, realEstate) {
                 if (err) {
                     req.session.error = 'Failed to create new real estate advertisement: ' + err.errmsg;
                     res.redirect('/real-estates/create');
@@ -29,7 +28,7 @@ module.exports = function (app, data) {
                 }
 
                 req.session.info = `Created successfully.`;
-                res.redirect('/real-estates');
+                res.redirect('/real-estates/'+ realEstate._id);
             });
         },
         getRealEstate: function (req, res) {
@@ -135,21 +134,31 @@ module.exports = function (app, data) {
         edit: function (req, res) {
             let realEstate = req.body;
             realEstate.id = req.url.substr(req.url.lastIndexOf('/') + 1);
-            data.update(realEstate, function (err, callback) {
-                res.redirect('/real-estates');
-                res.end();
+            data.update(realEstate, function (err) {
+                if (err) {
+                    req.session.error = 'Failed to update real estate advertisement: ' + err.errmsg;
+                    res.redirect('/real-estates/create');
+                    return
+                }
+
+                req.session.info = `Updated successfully.`;
+                res.redirect('/real-estates/'+ realEstate.id);
             })
         },
         deleteEstate: function (req, res) {
-            console.log('..IN DELETE...');
             if (app.locals.currentUser == undefined) {
                 res.redirect('/real-estates');
             } else {
                 //let realEstate = req.body;
                 let id = req.url.substr(req.url.lastIndexOf('/') + 1);
-                data.delete(id, function (err, callback) {
+                data.delete(id, function (err, estateToDelete) {
+                    if (err || !estateToDelete) {
+                        req.session.error = 'The real estate advertisement with the provided id cannot be obtained: ' + err.errmsg;
+                        res.redirect('/real-estates');
+                        return;
+                    }
+                    req.session.info = ' Real estate deleted successfully.';
                     res.redirect('/real-estates');
-                    res.end();
                 })
             }
         }

@@ -53,15 +53,13 @@ module.exports = {
         RealEstate.remove({_id: id})
             .exec(function (err, res) {
                 if (err) {
-                    console.log('Estate cannot be removed: ' + err);
                     callback(err);
                 } else {
-                    callback(res);
+                    callback(null, res);
                 }
             });
     },
     getLast: function (number, callback) {
-
         RealEstate.find({})
             .sort({dateOfCreation: -1})
             .limit(number)
